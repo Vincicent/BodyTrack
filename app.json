@@ -8,9 +8,11 @@
     "scheme": "bodytrack",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "com.vincicent.bodytrack",
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.vincicent.bodytrack",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
