@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 24, cache: npm }
+        with: { node-version-file: .node-version, cache: npm }
       - run: npm ci
       - run: npx expo install --check
       - run: npm run typecheck
