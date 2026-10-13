@@ -3,6 +3,7 @@ import { AppText } from '@/shared/ui/AppText';
 import { Button } from '@/shared/ui/Button';
 import { Card } from '@/shared/ui/Card';
 import { Screen } from '@/shared/ui/Screen';
+import { Link, router } from 'expo-router';
 import { View } from 'react-native';
 
 export default function Dashboard() {
@@ -18,7 +19,8 @@ export default function Dashboard() {
         <Card title="7-day avg" style={{ flex: 1 }}><AppText variant="title">78.7</AppText></Card>
         <Card title="Goal" style={{ flex: 1 }}><AppText variant="title">75.0</AppText></Card>
       </View>
-      <Button title="Add weight" onPress={() => {}} />
+      <Button title="Add weight" onPress={() => router.push('/entry/new')} />
+        <Link href={{ pathname: '/entry/[id]', params: {id: '42'}}}>Open entry 42</Link>
     </Screen>
   );
 }
