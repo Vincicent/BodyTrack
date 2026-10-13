@@ -1,0 +1,27 @@
+{
+  "common": { "save": "Enregistrer", "cancel": "Annuler", "delete": "Supprimer", "add": "Ajouter" },
+  "tabs": {
+    "dashboard": "Tableau de bord",
+    "history": "Historique",
+    "measurements": "Mensurations",
+    "settings": "Réglages"
+  },
+  "dashboard": {
+    "title": "Aujourd'hui",
+    "currentWeight": "Poids actuel",
+    "sevenDayAvg": "Moyenne 7 j",
+    "goal": "Objectif",
+    "addWeight": "Ajouter un poids"
+  },
+  "entry": {
+    "addTitle": "Ajouter un poids",
+    "editTitle": "Modifier le poids",
+    "editHeading": "Modifier l'entrée n°{{id}}"
+  },
+  "measurement": { "addTitle": "Ajouter des mensurations" },
+  "notFound": {
+    "title": "Oups",
+    "message": "Cet écran n'existe pas.",
+    "back": "Retour au tableau de bord"
+  }
+}

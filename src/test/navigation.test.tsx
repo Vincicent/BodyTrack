@@ -1,5 +1,6 @@
 import NotFoundScreen from '@/app/+not-found';
 import EditEntryScreen from '@/app/entry/[id]';
+import '@/shared/lib/i18n';
 import { router } from 'expo-router';
 import { act, renderRouter, screen } from 'expo-router/testing-library';
 import { Text } from 'react-native';
@@ -27,7 +28,10 @@ describe('navigation', () => {
   });
 
   it('shows not-found for unknown URLs', async () => {
-    await renderRouter({ index: () => null, '+not-found': NotFoundScreen }, { initialUrl: '/nope' });
+    await renderRouter(
+      { index: () => null, '+not-found': NotFoundScreen },
+      { initialUrl: '/nope' },
+    );
     expect(screen.getByText("This screen doesn't exist.")).toBeOnTheScreen();
   });
 });

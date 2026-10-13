@@ -1,0 +1,27 @@
+{
+  "common": { "save": "Save", "cancel": "Cancel", "delete": "Delete", "add": "Add" },
+  "tabs": {
+    "dashboard": "Dashboard",
+    "history": "History",
+    "measurements": "Measurements",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Today",
+    "currentWeight": "Current weight",
+    "sevenDayAvg": "7-day avg",
+    "goal": "Goal",
+    "addWeight": "Add weight"
+  },
+  "entry": {
+    "addTitle": "Add weight",
+    "editTitle": "Edit weight",
+    "editHeading": "Edit entry #{{id}}"
+  },
+  "measurement": { "addTitle": "Add measurements" },
+  "notFound": {
+    "title": "Oops",
+    "message": "This screen doesn't exist.",
+    "back": "Go to the dashboard"
+  }
+}

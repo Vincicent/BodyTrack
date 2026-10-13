@@ -42,6 +42,5 @@ example
 /ios
 /android
 
-#
-.claude
-.vscode
+# test coverage reports
+coverage/

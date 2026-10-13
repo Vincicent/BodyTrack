@@ -10,7 +10,9 @@ export function AppText({ variant = 'body', style, ...rest }: TextProps & { vari
     body: { fontSize: t.fontSize.md, color: t.colors.text },
     caption: { fontSize: t.fontSize.sm, color: t.colors.textMuted },
     number: {
-      fontSize: t.fontSize.xxl, fontWeight: '800' as const, color: t.colors.text,
+      fontSize: t.fontSize.xxl,
+      fontWeight: '800' as const,
+      color: t.colors.text,
       fontVariant: ['tabular-nums' as const],
     },
   }[variant];
