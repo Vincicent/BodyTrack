@@ -1,5 +1,5 @@
-import { index, integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { MEASUREMENT_SITES } from '@/shared/lib/measurementSites';
+import { index, integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const weightEntries = sqliteTable(
   'weight_entries',
@@ -8,6 +8,7 @@ export const weightEntries = sqliteTable(
     measuredAt: integer('measured_at', { mode: 'timestamp_ms' }).notNull(),
     weightKg: real('weight_kg').notNull(),
     note: text('note'),
+    photoUri: text('photo_uri'),
     createdAt: integer('created_at', { mode: 'timestamp_ms' })
       .notNull()
       .$defaultFn(() => new Date()),

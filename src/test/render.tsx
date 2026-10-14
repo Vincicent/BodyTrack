@@ -11,7 +11,7 @@ export async function renderWithProviders(
 ) {
   await i18n.changeLanguage(language);
   function Providers({ children }: { children: ReactNode }) {
-    return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>; // lesson 10 adds the Redux store
+    return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>;
   }
   return render(ui, { wrapper: Providers, ...options });
 }

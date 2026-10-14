@@ -9,6 +9,7 @@ export function makeWeight(overrides: Partial<WeightEntry> = {}): WeightEntry {
     measuredAt: new Date('2026-10-01T08:00:00Z'),
     weightKg: 75,
     note: null,
+    photoUri: null,
     ...overrides,
   };
 }

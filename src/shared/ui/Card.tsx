@@ -22,6 +22,7 @@ export function Card({ title, children, style, ...rest }: CardProps) {
       {...rest}
     >
       {title ? <AppText variant="caption">{title}</AppText> : null}
+      {children}
     </View>
   );
 }

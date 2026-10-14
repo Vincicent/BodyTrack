@@ -1,0 +1,1 @@
+ALTER TABLE `weight_entries` ADD `photo_uri` text;
