@@ -6,6 +6,7 @@
     "@expo/ui": "~57.0.23",
     "@expo/vector-icons": "^15.0.2",
     "@types/jest": "29.5.14",
+    "drizzle-orm": "^0.45.4",
     "expo": "~57.0.28",
     "expo-constants": "~57.0.21",
     "expo-device": "~57.0.2",
@@ -16,6 +17,7 @@
     "expo-localization": "~57.0.2",
     "expo-router": "~57.0.26",
     "expo-splash-screen": "~57.0.10",
+    "expo-sqlite": "~57.0.4",
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.3",
     "expo-system-ui": "~57.0.4",
@@ -37,7 +39,11 @@
   },
   "devDependencies": {
     "@testing-library/react-native": "^14.1.0",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/react": "~19.2.2",
+    "babel-plugin-inline-import": "^3.0.0",
+    "better-sqlite3": "^13.0.3",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~57.0.2",
     "eslint-config-prettier": "^10.1.8",
@@ -56,7 +62,8 @@
     "format": "prettier --write .",
     "test": "TZ=UTC jest",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run lint && npm test"
+    "check": "npm run typecheck && npm run lint && npm test",
+    "db:generate": "drizzle-kit generate"
   },
   "private": true
 }
