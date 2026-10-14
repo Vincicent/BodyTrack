@@ -1,4 +1,5 @@
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
+import { useLiveQuery } from '@/shared/db/useLiveQuery';
+import { weightEntries } from '@/shared/db/schema';
 import { weightRepository } from '../data/weightRepository';
 import type { WeightEntry } from '../domain/weight';
 
@@ -7,7 +8,11 @@ export function useWeightEntries(): {
   entries: WeightEntry[];
   error: Error | undefined;
   isLoading: boolean;
+  refresh: () => void;
 } {
-  const { data, error, updatedAt } = useLiveQuery(weightRepository.listQuery());
-  return { entries: data ?? [], error, isLoading: updatedAt === undefined };
+  const { data, error, updatedAt, refresh } = useLiveQuery(
+    weightRepository.listQuery(),
+    weightEntries,
+  );
+  return { entries: data ?? [], error, isLoading: updatedAt === undefined && !error, refresh };
 }

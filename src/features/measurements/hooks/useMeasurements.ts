@@ -1,8 +1,19 @@
+import { useLiveQuery } from '@/shared/db/useLiveQuery';
+import { measurementEntries } from '@/shared/db/schema';
 import type { MeasurementSite } from '@/shared/lib/measurementSites';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { measurementRepository } from '../data/measurementRepository';
+import type { MeasurementEntry } from '../domain/measurement';
 
-export function useMeasurements(site?: MeasurementSite) {
-  const { data, error, updatedAt } = useLiveQuery(measurementRepository.listQuery(site), [site]);
-  return { entries: data ?? [], error, isLoading: updatedAt === undefined };
+export function useMeasurements(site?: MeasurementSite): {
+  entries: MeasurementEntry[];
+  error: Error | undefined;
+  isLoading: boolean;
+  refresh: () => void;
+} {
+  const { data, error, updatedAt, refresh } = useLiveQuery(
+    measurementRepository.listQuery(site),
+    measurementEntries,
+    [site],
+  );
+  return { entries: data ?? [], error, isLoading: updatedAt === undefined && !error, refresh };
 }
