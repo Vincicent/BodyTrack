@@ -1,5 +1,10 @@
 {
-  "common": { "save": "Save", "cancel": "Cancel", "delete": "Delete", "add": "Add" },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add"
+  },
   "tabs": {
     "dashboard": "Dashboard",
     "history": "History",
@@ -18,10 +23,40 @@
     "editTitle": "Edit weight",
     "editHeading": "Edit entry #{{id}}"
   },
-  "measurement": { "addTitle": "Add measurements" },
+  "measurement": {
+    "addTitle": "Add measurements"
+  },
   "notFound": {
     "title": "Oops",
     "message": "This screen doesn't exist.",
     "back": "Go to the dashboard"
+  },
+  "form": {
+    "weight": "Weight",
+    "date": "Date",
+    "note": "Note (optional)",
+    "saveChanges": "Save changes",
+    "deleteEntry": "Delete entry",
+    "deleteConfirmTitle": "Delete this entry?",
+    "deleteConfirmMessage": "This can't be undone."
+  },
+  "errors": {
+    "required": "Required",
+    "notANumber": "Must be a number",
+    "positive": "Must be greater than 0",
+    "futureDate": "Date cannot be in the future",
+    "tooLong": "Too long",
+    "atLeastOne": "Fill in at least one measurement"
+  },
+  "sites": {
+    "neck": "Neck",
+    "chest": "Chest",
+    "waist": "Waist",
+    "hips": "Hips",
+    "armL": "Arm (L)",
+    "armR": "Arm (R)",
+    "thighL": "Thigh (L)",
+    "thighR": "Thigh (R)",
+    "calf": "Calf"
   }
 }

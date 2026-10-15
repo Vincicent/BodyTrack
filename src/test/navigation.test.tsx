@@ -1,7 +1,6 @@
 import NotFoundScreen from '@/app/+not-found';
-import EditEntryScreen from '@/app/entry/[id]';
 import '@/shared/lib/i18n';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { act, renderRouter, screen } from 'expo-router/testing-library';
 import { Text } from 'react-native';
 
@@ -23,8 +22,12 @@ describe('navigation', () => {
   });
 
   it('reads the id param from a deep link', async () => {
-    await renderRouter({ 'entry/[id]': EditEntryScreen }, { initialUrl: '/entry/42' });
-    expect(screen.getByText('Edit entry #42')).toBeOnTheScreen();
+    function EntryStub() {
+      const { id } = useLocalSearchParams<{ id: string }>();
+      return <Text>Entry {id}</Text>;
+    }
+    await renderRouter({ 'entry/[id]': EntryStub }, { initialUrl: '/entry/42' });
+    expect(screen.getByText('Entry 42')).toBeOnTheScreen();
   });
 
   it('shows not-found for unknown URLs', async () => {

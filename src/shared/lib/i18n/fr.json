@@ -1,5 +1,10 @@
 {
-  "common": { "save": "Enregistrer", "cancel": "Annuler", "delete": "Supprimer", "add": "Ajouter" },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "add": "Ajouter"
+  },
   "tabs": {
     "dashboard": "Tableau de bord",
     "history": "Historique",
@@ -18,10 +23,40 @@
     "editTitle": "Modifier le poids",
     "editHeading": "Modifier l'entrée n°{{id}}"
   },
-  "measurement": { "addTitle": "Ajouter des mensurations" },
+  "measurement": {
+    "addTitle": "Ajouter des mensurations"
+  },
   "notFound": {
     "title": "Oups",
     "message": "Cet écran n'existe pas.",
     "back": "Retour au tableau de bord"
+  },
+  "form": {
+    "weight": "Poids",
+    "date": "Date",
+    "note": "Note (facultatif)",
+    "saveChanges": "Enregistrer les modifications",
+    "deleteEntry": "Supprimer l'entrée",
+    "deleteConfirmTitle": "Supprimer cette entrée ?",
+    "deleteConfirmMessage": "Cette action est irréversible."
+  },
+  "errors": {
+    "required": "Obligatoire",
+    "notANumber": "Doit être un nombre",
+    "positive": "Doit être supérieur à 0",
+    "futureDate": "La date ne peut pas être dans le futur",
+    "tooLong": "Trop long",
+    "atLeastOne": "Renseignez au moins une mensuration"
+  },
+  "sites": {
+    "neck": "Cou",
+    "chest": "Poitrine",
+    "waist": "Taille",
+    "hips": "Hanches",
+    "armL": "Bras (G)",
+    "armR": "Bras (D)",
+    "thighL": "Cuisse (G)",
+    "thighR": "Cuisse (D)",
+    "calf": "Mollet"
   }
 }
