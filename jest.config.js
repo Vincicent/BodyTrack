@@ -8,4 +8,7 @@ module.exports = {
     '!src/test/**',
     '!src/app/**',
   ],
+  // Reanimated 4 runs on react-native-worklets, which needs its own resolver in Jest
+  resolver: 'react-native-worklets/jest/resolver',
+  setupFiles: ['react-native-gesture-handler/jestSetup', '<rootDir>/jest.setup.js'],
 };

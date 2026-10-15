@@ -58,5 +58,12 @@
     "thighL": "Cuisse (G)",
     "thighR": "Cuisse (D)",
     "calf": "Mollet"
+  },
+  "history": {
+    "empty": "Aucune entrée pour l'instant",
+    "emptyAction": "Ajoutez votre premier poids",
+    "up": "En hausse de {{value}}",
+    "down": "En baisse de {{value}}",
+    "stable": "Aucun changement"
   }
 }

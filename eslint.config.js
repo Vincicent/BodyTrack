@@ -17,5 +17,6 @@ module.exports = defineConfig([
       ],
     },
   },
+  { files: ['jest.setup.js'], languageOptions: { globals: { jest: 'readonly' } } },
   { ignores: ['dist/*', 'ios/*', 'android/*', 'drizzle/*', 'coverage/*'] },
 ]);

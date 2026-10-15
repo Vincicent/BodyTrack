@@ -58,5 +58,12 @@
     "thighL": "Thigh (L)",
     "thighR": "Thigh (R)",
     "calf": "Calf"
+  },
+  "history": {
+    "empty": "No entries yet",
+    "emptyAction": "Add your first weight",
+    "up": "Up {{value}}",
+    "down": "Down {{value}}",
+    "stable": "No change"
   }
 }
