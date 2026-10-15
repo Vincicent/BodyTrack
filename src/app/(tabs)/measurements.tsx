@@ -1,11 +1,5 @@
-import { AppText, Screen } from '@/shared/ui';
-import { useTranslation } from 'react-i18next';
+import { SiteSummaryList } from '@/features/measurements/components/SiteSummaryList';
 
 export default function MeasurementsScreen() {
-  const { t } = useTranslation();
-  return (
-    <Screen>
-      <AppText variant="title">{t('tabs.measurements')}</AppText>
-    </Screen>
-  );
+  return <SiteSummaryList unit="cm" />; // lesson 10: the user's length unit
 }

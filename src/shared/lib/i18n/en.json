@@ -24,7 +24,9 @@
     "editHeading": "Edit entry #{{id}}"
   },
   "measurement": {
-    "addTitle": "Add measurements"
+    "addTitle": "Add measurements",
+    "empty": "No measurements yet",
+    "sinceStart": "{{value}} since start"
   },
   "notFound": {
     "title": "Oops",

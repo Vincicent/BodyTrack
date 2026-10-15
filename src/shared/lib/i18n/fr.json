@@ -24,7 +24,9 @@
     "editHeading": "Modifier l'entrée n°{{id}}"
   },
   "measurement": {
-    "addTitle": "Ajouter des mensurations"
+    "addTitle": "Ajouter des mensurations",
+    "empty": "Aucune mensuration",
+    "sinceStart": "{{value}} depuis le début"
   },
   "notFound": {
     "title": "Oups",

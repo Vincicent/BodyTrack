@@ -43,6 +43,18 @@ export default function TabsLayout() {
         name="measurements"
         options={{
           title: t('tabs.measurements'),
+          // The only way into the measurement form: a "+" in the header
+          headerRight: () => (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t('measurement.addTitle')}
+              hitSlop={12}
+              onPress={() => router.push('/measurement/new')}
+              style={{ paddingHorizontal: 16 }}
+            >
+              <Ionicons name="add" size={26} color={theme.colors.primary} />
+            </Pressable>
+          ),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="body-outline" color={color} size={size} />
           ),
