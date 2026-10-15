@@ -8,7 +8,10 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version-file: .node-version, cache: npm }
       - run: npm ci
+      # Offline: checks your packages against the Expo SDK you have installed, not against Expo's latest patch
+      # release (which would turn CI red whenever Expo publishes, with no change on your side)
       - run: npx expo install --check
+        env: { EXPO_OFFLINE: 1 }
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test -- --ci --coverage
