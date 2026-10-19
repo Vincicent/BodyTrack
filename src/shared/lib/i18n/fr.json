@@ -16,7 +16,10 @@
     "currentWeight": "Poids actuel",
     "sevenDayAvg": "Moyenne 7 j",
     "goal": "Objectif",
-    "addWeight": "Ajouter un poids"
+    "addWeight": "Ajouter un poids",
+    "bmi": "IMC",
+    "toGo": "Encore {{value}}",
+    "goalReached": "Objectif atteint 🎉"
   },
   "entry": {
     "addTitle": "Ajouter un poids",
@@ -67,5 +70,23 @@
     "up": "En hausse de {{value}}",
     "down": "En baisse de {{value}}",
     "stable": "Aucun changement"
+  },
+  "settings": {
+    "units": "Unités",
+    "weightUnit": "Poids",
+    "lengthUnit": "Longueur",
+    "profile": "Profil",
+    "height": "Taille",
+    "goalWeight": "Poids cible",
+    "appearance": "Apparence",
+    "theme": "Thème",
+    "themeSystem": "Auto",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "language": "Langue",
+    "languageSystem": "Système",
+    "data": "Données",
+    "deleteAll": "Supprimer toutes les données",
+    "about": "À propos"
   }
 }

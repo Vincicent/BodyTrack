@@ -1,4 +1,6 @@
+import { selectWeightUnit } from '@/features/settings';
 import { EmptyState, LoadingState } from '@/shared/ui';
+import { useAppSelector } from '@/store/hooks';
 import { FlashList } from '@shopify/flash-list';
 import { useTranslation } from 'react-i18next';
 import { weightRepository } from '../data/weightRepository';
@@ -11,6 +13,7 @@ import { WeightRow } from './WeightRow';
 export function HistoryList() {
   const { t, i18n } = useTranslation();
   const { entries, isLoading } = useWeightEntries();
+  const unit = useAppSelector(selectWeightUnit);
   if (isLoading) return <LoadingState />;
   if (entries.length === 0) {
     return (
@@ -30,7 +33,7 @@ export function HistoryList() {
         item.type === 'header' ? (
           <MonthHeader label={item.label} />
         ) : (
-          <WeightRow row={item} unit="kg" onDelete={(id) => weightRepository.remove(id)} />
+          <WeightRow row={item} unit={unit} onDelete={(id) => weightRepository.remove(id)} />
         )
       }
       contentInsetAdjustmentBehavior="automatic"

@@ -4,3 +4,4 @@ export { Card } from './Card';
 export { EmptyState } from './EmptyState';
 export { LoadingState } from './LoadingState';
 export { Screen } from './Screen';
+export { SegmentedControl } from './SegmentedControl';

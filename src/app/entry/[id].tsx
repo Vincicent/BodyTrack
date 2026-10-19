@@ -1,17 +1,20 @@
+import { selectWeightUnit } from '@/features/settings';
 import { WeightForm } from '@/features/weight/components/WeightForm';
 import { weightRepository } from '@/features/weight/data/weightRepository';
 import { useSaveWeight } from '@/features/weight/hooks/useSaveWeight';
 import { confirm } from '@/shared/lib/confirm';
 import { goBackOrHome } from '@/shared/lib/navigation';
-import { round } from '@/shared/lib/units';
+import { kgTo, round } from '@/shared/lib/units';
 import { AppText, Button, Screen } from '@/shared/ui';
+import { useAppSelector } from '@/store/hooks';
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 export default function EditEntryScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useTranslation();
-  const save = useSaveWeight('kg');
+  const unit = useAppSelector(selectWeightUnit);
+  const save = useSaveWeight(unit);
   const entry = weightRepository.getById(Number(id));
 
   if (!entry) {
@@ -37,10 +40,10 @@ export default function EditEntryScreen() {
   return (
     <Screen>
       <WeightForm
-        unit="kg"
+        unit={unit}
         submitLabel={t('form.saveChanges')}
         defaultValues={{
-          weight: String(round(entry.weightKg)),
+          weight: String(round(kgTo(unit, entry.weightKg))),
           measuredAt: entry.measuredAt,
           note: entry.note ?? '',
         }}

@@ -4,7 +4,8 @@ export const DAY_MS = 24 * 60 * 60 * 1000;
 
 /** Entries sorted by date ascending (returns a new array). */
 export function sortByDate(entries: WeightEntry[]): WeightEntry[] {
-  return entries.toSorted((a, b) => a.measuredAt.getTime() - b.measuredAt.getTime());
+  // [...entries] copies first: plain sort() mutates. (Not toSorted(): Hermes, the engine on iOS/Android, lacks it.)
+  return [...entries].sort((a, b) => a.measuredAt.getTime() - b.measuredAt.getTime());
 }
 
 /** Trailing moving average over the last `windowDays` days, for each entry (ascending order). */

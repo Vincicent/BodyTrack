@@ -1,13 +1,16 @@
+import { selectWeightUnit } from '@/features/settings';
 import { WeightForm } from '@/features/weight/components/WeightForm';
 import { useSaveWeight } from '@/features/weight/hooks/useSaveWeight';
 import { goBackOrHome } from '@/shared/lib/navigation';
 import { Button, Screen } from '@/shared/ui';
+import { useAppSelector } from '@/store/hooks';
 import { Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 export default function NewEntryScreen() {
   const { t } = useTranslation();
-  const save = useSaveWeight('kg'); // lesson 10: the user's unit
+  const unit = useAppSelector(selectWeightUnit);
+  const save = useSaveWeight(unit);
   return (
     <>
       <Stack.Screen
@@ -19,7 +22,7 @@ export default function NewEntryScreen() {
       />
       <Screen>
         <WeightForm
-          unit="kg"
+          unit={unit}
           onSubmit={async (values) => {
             await save(values);
             goBackOrHome();

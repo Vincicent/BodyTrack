@@ -16,7 +16,10 @@
     "currentWeight": "Current weight",
     "sevenDayAvg": "7-day avg",
     "goal": "Goal",
-    "addWeight": "Add weight"
+    "addWeight": "Add weight",
+    "bmi": "BMI",
+    "toGo": "{{value}} to go",
+    "goalReached": "Goal reached 🎉"
   },
   "entry": {
     "addTitle": "Add weight",
@@ -67,5 +70,23 @@
     "up": "Up {{value}}",
     "down": "Down {{value}}",
     "stable": "No change"
+  },
+  "settings": {
+    "units": "Units",
+    "weightUnit": "Weight",
+    "lengthUnit": "Length",
+    "profile": "Profile",
+    "height": "Height",
+    "goalWeight": "Goal weight",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "themeSystem": "Auto",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "language": "Language",
+    "languageSystem": "System",
+    "data": "Data",
+    "deleteAll": "Delete all data",
+    "about": "About"
   }
 }

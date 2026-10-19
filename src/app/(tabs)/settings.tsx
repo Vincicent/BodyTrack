@@ -1,11 +1,10 @@
-import { AppText, Screen } from '@/shared/ui';
-import { useTranslation } from 'react-i18next';
+import { SettingsForm } from '@/features/settings/components/SettingsForm';
+import { Screen } from '@/shared/ui';
 
 export default function SettingsScreen() {
-  const { t } = useTranslation();
   return (
     <Screen>
-      <AppText variant="title">{t('tabs.settings')}</AppText>
+      <SettingsForm />
     </Screen>
   );
 }

@@ -1,5 +1,8 @@
 import { SiteSummaryList } from '@/features/measurements/components/SiteSummaryList';
+import { selectLengthUnit } from '@/features/settings';
+import { useAppSelector } from '@/store/hooks';
 
 export default function MeasurementsScreen() {
-  return <SiteSummaryList unit="cm" />; // lesson 10: the user's length unit
+  const unit = useAppSelector(selectLengthUnit);
+  return <SiteSummaryList unit={unit} />;
 }
