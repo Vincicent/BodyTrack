@@ -95,5 +95,22 @@
     "stable": "Weight trend: stable over {{days}} days.",
     "down": "Weight trend: down {{value}} over {{days}} days.",
     "up": "Weight trend: up {{value}} over {{days}} days."
+  },
+  "reminders": {
+    "title": "Reminders",
+    "daily": "Daily reminder",
+    "body": "Time to log your weight ⚖️",
+    "denied": "Notifications are off for BodyTrack.",
+    "openSettings": "Open settings"
+  },
+  "export": {
+    "csv": "Export CSV",
+    "imported": "{{count}} imported, {{skipped}} skipped",
+    "import": "Import CSV",
+    "backupHint": "Your data stays on this device. Export it regularly as a backup.",
+    "notBodyTrack": "This file isn't a BodyTrack export."
+  },
+  "photo": {
+    "add": "Add photo"
   }
 }

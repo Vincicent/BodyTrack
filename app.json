@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "body-track",
+    "name": "BodyTrack",
     "slug": "body-track",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -37,7 +37,15 @@
       ],
       "expo-localization",
       "expo-sqlite",
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      "expo-sharing",
+      ["expo-notifications", { "color": "#4F46E5" }],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "BodyTrack uses your photos to attach progress pictures to your entries."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

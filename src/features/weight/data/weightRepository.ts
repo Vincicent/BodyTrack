@@ -14,6 +14,9 @@ export function createWeightRepository(db: () => AppDatabase) {
     update: (id: number, patch: Partial<NewWeightEntry>) =>
       db().update(weightEntries).set(patch).where(eq(weightEntries.id, id)).run(),
     remove: (id: number) => db().delete(weightEntries).where(eq(weightEntries.id, id)).run(),
+    addMany: (entries: NewWeightEntry[]) =>
+      db().transaction((tx) => entries.map((e) => tx.insert(weightEntries).values(e).run())),
+    removeAll: () => db().delete(weightEntries).run(),
   };
 }
 

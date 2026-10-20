@@ -20,6 +20,7 @@ export function createMeasurementRepository(db: () => AppDatabase) {
       ),
     remove: (id: number) =>
       db().delete(measurementEntries).where(eq(measurementEntries.id, id)).run(),
+    removeAll: () => db().delete(measurementEntries).run(),
   };
 }
 

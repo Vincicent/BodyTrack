@@ -95,5 +95,22 @@
     "stable": "Tendance : stable sur {{days}} jours.",
     "down": "Tendance : en baisse de {{value}} sur {{days}} jours.",
     "up": "Tendance : en hausse de {{value}} sur {{days}} jours."
+  },
+  "reminders": {
+    "title": "Rappels",
+    "daily": "Rappel quotidien",
+    "body": "C'est l'heure de vous peser ⚖️",
+    "denied": "Les notifications sont désactivées pour BodyTrack.",
+    "openSettings": "Ouvrir les réglages"
+  },
+  "export": {
+    "csv": "Exporter en CSV",
+    "imported": "{{count}} importées, {{skipped}} ignorées",
+    "import": "Importer un CSV",
+    "backupHint": "Vos données restent sur cet appareil. Exportez-les régulièrement comme sauvegarde.",
+    "notBodyTrack": "Ce fichier n'est pas un export BodyTrack."
+  },
+  "photo": {
+    "add": "Ajouter une photo"
   }
 }

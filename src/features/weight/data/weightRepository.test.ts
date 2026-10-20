@@ -37,6 +37,16 @@ describe('weightRepository', () => {
     expect(repo.getById(id)?.weightKg).toBe(69.5);
   });
 
+  it('imports many entries at once and deletes them all', () => {
+    repo.addMany([
+      { measuredAt: new Date('2026-10-01T08:00:00Z'), weightKg: 73, note: null },
+      { measuredAt: new Date('2026-10-02T08:00:00Z'), weightKg: 72, note: null },
+    ]);
+    expect(repo.listQuery().all()).toHaveLength(2);
+    repo.removeAll();
+    expect(repo.listQuery().all()).toHaveLength(0);
+  });
+
   it('removes an entry', () => {
     const { id } = repo.add({ measuredAt: new Date(), weightKg: 70, note: null });
     repo.remove(id);

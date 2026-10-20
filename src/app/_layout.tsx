@@ -1,4 +1,6 @@
 import { selectLanguage, selectTheme } from '@/features/settings';
+import { configureNotifications } from '@/features/settings/reminders';
+import { useNotificationRouting } from '@/features/settings/useNotificationRouting';
 import { DatabaseProvider } from '@/shared/db/DatabaseProvider';
 import { deviceLanguage, i18n } from '@/shared/lib/i18n'; // importing it initialises translations
 import { ThemePreferenceProvider } from '@/shared/theme/ThemePreference';
@@ -23,8 +25,11 @@ function PreferencesBridge({ children }: { children: ReactNode }) {
   return <ThemePreferenceProvider value={theme}>{children}</ThemePreferenceProvider>;
 }
 
+configureNotifications();
+
 function Navigation() {
   const { t } = useTranslation();
+  useNotificationRouting();
   const isDark = useColorSchemeName() === 'dark';
   return (
     <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>

@@ -27,4 +27,16 @@ describe('measurementRepository', () => {
     expect(() => repo.addMany([valid, { ...valid, valueCm: null as unknown as number }])).toThrow();
     expect(repo.listQuery().all()).toHaveLength(0);
   });
+
+  it('removes one measurement', () => {
+    const [waist] = repo.addMany([valid, { ...valid, site: 'hips', valueCm: 98 }]);
+    repo.remove(waist!.id);
+    expect(repo.listQuery().all()).toEqual([expect.objectContaining({ site: 'hips' })]);
+  });
+
+  it('deletes every measurement ("Delete all data", lesson 12)', () => {
+    repo.addMany([valid, { ...valid, site: 'hips', valueCm: 98 }]);
+    repo.removeAll();
+    expect(repo.listQuery().all()).toHaveLength(0);
+  });
 });

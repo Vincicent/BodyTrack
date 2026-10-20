@@ -1,6 +1,7 @@
 import { selectWeightUnit } from '@/features/settings';
 import { WeightForm } from '@/features/weight/components/WeightForm';
 import { useSaveWeight } from '@/features/weight/hooks/useSaveWeight';
+import { haptics } from '@/shared/lib/haptics';
 import { goBackOrHome } from '@/shared/lib/navigation';
 import { Button, Screen } from '@/shared/ui';
 import { useAppSelector } from '@/store/hooks';
@@ -25,6 +26,7 @@ export default function NewEntryScreen() {
           unit={unit}
           onSubmit={async (values) => {
             await save(values);
+            void haptics.success();
             goBackOrHome();
           }}
         />
