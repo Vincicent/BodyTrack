@@ -88,5 +88,12 @@
     "data": "Données",
     "deleteAll": "Supprimer toutes les données",
     "about": "À propos"
+  },
+  "chart": {
+    "trend": "Tendance",
+    "notEnough": "Ajoutez une autre entrée pour voir votre tendance.",
+    "stable": "Tendance : stable sur {{days}} jours.",
+    "down": "Tendance : en baisse de {{value}} sur {{days}} jours.",
+    "up": "Tendance : en hausse de {{value}} sur {{days}} jours."
   }
 }

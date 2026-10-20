@@ -88,5 +88,12 @@
     "data": "Data",
     "deleteAll": "Delete all data",
     "about": "About"
+  },
+  "chart": {
+    "trend": "Trend",
+    "notEnough": "Add one more entry to see your trend.",
+    "stable": "Weight trend: stable over {{days}} days.",
+    "down": "Weight trend: down {{value}} over {{days}} days.",
+    "up": "Weight trend: up {{value}} over {{days}} days."
   }
 }

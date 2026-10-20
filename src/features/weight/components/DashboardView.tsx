@@ -9,6 +9,7 @@ import { formatDelta } from '../domain/history';
 import { changeOver, goalProgress, movingAverage, sortByDate } from '../domain/stats';
 import { useFormatWeight } from '../hooks/useFormatWeight';
 import { useWeightEntries } from '../hooks/useWeightEntries';
+import { TrendCard } from './TrendCard';
 
 export function DashboardView() {
   const theme = useTheme();
@@ -60,6 +61,7 @@ export function DashboardView() {
               : t('dashboard.toGo', { value: formatWeight(Math.abs(latest.weightKg - goalKg)) })}
           </AppText>
           <View
+            accessible
             accessibilityRole="progressbar"
             accessibilityValue={{ min: 0, max: 100, now: Math.round(progress * 100) }}
             style={{
@@ -79,6 +81,7 @@ export function DashboardView() {
           </View>
         </Card>
       ) : null}
+      <TrendCard entries={entries} />
       <Button title={t('dashboard.addWeight')} onPress={() => router.push('/entry/new')} />
     </Screen>
   );

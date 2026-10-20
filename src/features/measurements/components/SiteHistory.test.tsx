@@ -1,9 +1,12 @@
+import { TrendChart } from '@/shared/ui/charts/TrendChart';
 import { renderWithProviders, screen } from '@/test/render';
 import type { MeasurementEntry } from '../domain/measurement';
 import { useMeasurements } from '../hooks/useMeasurements';
 import { SiteHistory } from './SiteHistory';
 
 jest.mock('../hooks/useMeasurements');
+jest.mock('@/shared/ui/charts/TrendChart', () => ({ TrendChart: jest.fn(() => null) })); // Skia never loads in Jest
+const chart = jest.mocked(TrendChart);
 const mocked = jest.mocked(useMeasurements);
 const m = (valueCm: number, day: number): MeasurementEntry => ({
   id: day,
@@ -26,5 +29,29 @@ describe('SiteHistory', () => {
     expect(screen.getByText('33.1 in')).toBeOnTheScreen();
     expect(screen.getByText('−0.4 in')).toBeOnTheScreen(); // 84 − 85 cm
     expect(screen.getByText('−1.0 in')).toBeOnTheScreen(); // 85 − 87.5 cm
+  });
+});
+
+describe('SiteHistory chart', () => {
+  beforeEach(() => chart.mockClear());
+
+  const loaded = (entries: MeasurementEntry[]) => ({
+    entries,
+    isLoading: false,
+    error: undefined,
+    refresh: jest.fn(),
+  });
+
+  it('draws the chart from two different days', async () => {
+    mocked.mockReturnValue(loaded([m(84, 5), m(87.5, 1)]));
+    await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
+    expect(chart.mock.lastCall?.[0].data).toHaveLength(2);
+  });
+
+  it('shows a hint instead with a single measurement', async () => {
+    mocked.mockReturnValue(loaded([m(84, 5)]));
+    await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
+    expect(screen.getByText('Add one more entry to see your trend.')).toBeOnTheScreen();
+    expect(chart).not.toHaveBeenCalled();
   });
 });

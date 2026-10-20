@@ -1,5 +1,5 @@
 import { i18n, type SupportedLanguage } from '@/shared/lib/i18n';
-import { render, type RenderOptions } from '@testing-library/react-native';
+import { act, render, type RenderOptions } from '@testing-library/react-native';
 import type { ReactElement, ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
@@ -20,7 +20,10 @@ export async function renderWithProviders(
     ...options
   }: Options = {},
 ) {
-  await i18n.changeLanguage(language);
+  // In act(): changing the language re-renders any tree already mounted in this test
+  await act(async () => {
+    await i18n.changeLanguage(language);
+  });
   function Providers({ children }: { children: ReactNode }) {
     return (
       <Provider store={store}>

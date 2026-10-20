@@ -44,3 +44,26 @@ export function formatLengthChange(
   if (value === 0) return `±${abs}`;
   return `${value > 0 ? '+' : MINUS}${abs}`;
 }
+
+/** The user's local calendar day ("2026-9-19"): two measurements the same evening must not count as two days. */
+const localDay = (d: Date) => [d.getFullYear(), d.getMonth(), d.getDate()].join('-');
+
+/**
+ * Points for one site's chart, oldest first, in the user's unit. ONE point per day: the last measurement of that day
+ * (a second one the same day is usually a correction, and two points minutes apart make the line jump vertically).
+ * Measurements are sparse (weekly or monthly), so the line simply joins them (no moving average).
+ * Null when there's nothing to draw: fewer than 2 different days.
+ */
+export function siteChartPoints(
+  entries: MeasurementEntry[],
+  unit: LengthUnit,
+): { t: number; value: number; trend: number }[] | null {
+  const sorted = [...entries].sort((a, b) => a.measuredAt.getTime() - b.measuredAt.getTime());
+  const lastOfDay = new Map<string, MeasurementEntry>();
+  for (const e of sorted) lastOfDay.set(localDay(e.measuredAt), e); // a later one the same day replaces it
+  if (lastOfDay.size < 2) return null;
+  return [...lastOfDay.values()].map((e) => {
+    const value = round(cmTo(unit, e.valueCm), 1);
+    return { t: e.measuredAt.getTime(), value, trend: value };
+  });
+}

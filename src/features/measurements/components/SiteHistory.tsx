@@ -1,13 +1,14 @@
-import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
 import type { MeasurementSite } from '@/shared/lib/measurementSites';
 import type { LengthUnit } from '@/shared/lib/units';
 import { useTheme } from '@/shared/theme/useTheme';
 import { AppText, EmptyState, LoadingState, Screen } from '@/shared/ui';
-import { formatLength, formatLengthChange } from '../domain/siteSummary';
+import { TrendChart } from '@/shared/ui/charts/TrendChart';
+import { useTranslation } from 'react-i18next';
+import { View } from 'react-native';
+import { formatLength, formatLengthChange, siteChartPoints } from '../domain/siteSummary';
 import { useMeasurements } from '../hooks/useMeasurements';
 
-/** Every measurement of one site, newest first, with the change from the previous one. */
+/** A chart of one site, then every measurement, newest first, with the change from the previous one. */
 export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: LengthUnit }) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
@@ -22,8 +23,15 @@ export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: Lengt
     );
   }
   const date = new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium' });
+  const points = siteChartPoints(entries, unit);
+  const number = new Intl.NumberFormat(i18n.language, { maximumFractionDigits: 1 });
   return (
     <Screen>
+      {points ? (
+        <TrendChart data={points} formatY={(v) => number.format(v)} />
+      ) : (
+        <AppText variant="caption">{t('chart.notEnough')}</AppText>
+      )}
       {entries.map((entry, i) => {
         const previous = entries[i + 1]; // the list is newest first
         const change = formatLengthChange(

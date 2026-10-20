@@ -28,7 +28,8 @@ function Navigation() {
   const isDark = useColorSchemeName() === 'dark';
   return (
     <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
-      <Stack>
+      {/* minimal: only the back arrow (otherwise iOS shows the route group's name, "(tabs)") */}
+      <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="entry/new"
