@@ -3,7 +3,7 @@ appId: com.vincicent.bodytrack
 ---
 - launchApp:
     clearState: true
-- tapOn: 'Measurements'
+- tapOn: '.*Measurements.*' # tab: iOS reads it as "Measurements, tab, n of 4"
 - assertVisible: 'No measurements yet'
 - tapOn:
     text: 'Add measurements'

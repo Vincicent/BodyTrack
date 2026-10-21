@@ -1,0 +1,64 @@
+# (free alternative to EAS Workflows, whose Maestro jobs need a paid plan): build a release APK, start
+# an Android emulator on GitHub's machine, and run the Maestro flows (.maestro/) on every pull request to main.
+name: E2E Android
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch: # also runnable by hand: Actions tab → E2E Android → Run workflow
+concurrency:
+  group: e2e-android-${{ github.ref }}
+  cancel-in-progress: true # a new push to the PR cancels the run still going
+jobs:
+  maestro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: npm }
+      - uses: actions/setup-java@v4
+        with: { distribution: zulu, java-version: 17 }
+      - uses: gradle/actions/setup-gradle@v4 # caches Gradle between runs
+      - run: npm ci
+
+      # Release build: the JavaScript is inside the APK (no Metro). android/ is generated, as on your Mac. Prebuild signs
+      # release builds with the debug key, so no secret is needed. x86_64 only: the emulator's processor type.
+      - run: npx expo prebuild --platform android --no-install
+      - run: ./gradlew assembleRelease
+        working-directory: android
+        env: { ORG_GRADLE_PROJECT_reactNativeArchitectures: x86_64 }
+
+      - name: Install Maestro
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      # The emulator needs hardware acceleration (KVM), available on GitHub's Linux machines once allowed
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run the flows on an emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        env: { MAESTRO_CLI_NO_ANALYTICS: 1 }
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
+          # Each line runs as its own command
+          script: |
+            adb install android/app/build/outputs/apk/release/app-release.apk
+            maestro test .maestro/ --format junit --output maestro-report.xml
+
+      - name: Keep screenshots and logs of a failed flow
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maestro-debug
+          path: |
+            ~/.maestro/tests/
+            maestro-report.xml

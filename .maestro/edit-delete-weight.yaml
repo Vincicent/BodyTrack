@@ -7,10 +7,11 @@ appId: com.vincicent.bodytrack
     file: subflows/add-first-weight.yaml
     env:
       WEIGHT: '80'
-- tapOn: 'History'
+- tapOn: '.*History.*' # tab: iOS reads it as "History, tab, n of 4"
 - tapOn: '.*80.0 kg.*' # the row
 - assertVisible: 'Edit weight'
-- tapOn: 'Weight'
+- tapOn:
+    id: 'weight-input' # the input, not its label
 - eraseText
 - inputText: '79'
 - tapOn: 'Save changes'

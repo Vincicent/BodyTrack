@@ -1,0 +1,59 @@
+# Same as e2e-android.yml, on an iOS simulator. macOS machines are free for public repositories (they
+# count 10x for private ones). A simulator build needs no Apple account and no signing.
+name: E2E iOS
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch: # also runnable by hand: Actions tab → E2E iOS → Run workflow
+concurrency:
+  group: e2e-ios-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  maestro:
+    runs-on: macos-26
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with: { xcode-version: latest-stable }
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: npm }
+      - uses: actions/setup-java@v4 # Maestro runs on Java
+        with: { distribution: zulu, java-version: 17 }
+      - run: npm ci
+
+      # Release build for the simulator: the JavaScript is inside the app (no Metro)
+      - run: npx expo prebuild --platform ios
+      - name: Build
+        working-directory: ios
+        run: >
+          xcodebuild -workspace BodyTrack.xcworkspace -scheme BodyTrack -configuration Release
+          -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
+
+      - name: Install Maestro
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      # The machine's simulator models change with Xcode versions: take the first available iPhone
+      - name: Start a simulator and install the app
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for r in d for x in d[r] if x['name'].startswith('iPhone')))")
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl install "$UDID" ios/build/Build/Products/Release-iphonesimulator/BodyTrack.app
+
+      - name: Run the flows
+        env: { MAESTRO_CLI_NO_ANALYTICS: 1 }
+        run: maestro --device "$UDID" test .maestro/ --format junit --output maestro-report.xml
+
+      - name: Keep screenshots and logs of a failed flow
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maestro-debug-ios
+          path: |
+            ~/.maestro/tests/
+            maestro-report.xml

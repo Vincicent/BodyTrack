@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Web E2E (lesson 14): the exported build, served with the same headers as production.
+// Web E2E: the exported build, served with the same headers as production.
 export default defineConfig({
   testDir: './e2e-web',
   fullyParallel: false, // one browser database per test: keep them sequential

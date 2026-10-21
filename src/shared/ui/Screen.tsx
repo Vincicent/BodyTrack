@@ -9,7 +9,7 @@ export function Screen({ children, style }: ViewProps) {
       contentContainerStyle={[styles.content, { padding: t.spacing.lg, gap: t.spacing.lg }, style]}
       contentInsetAdjustmentBehavior="automatic"
       // With the keyboard open, a tap on a button (Save) must press it. The default ("never") only closes the keyboard,
-      // so users had to tap twice. Found by the Maestro flow (lesson 14).
+      // so users had to tap twice. Found by the Maestro flow.
       keyboardShouldPersistTaps="handled"
     >
       {children}
