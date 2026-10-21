@@ -6,6 +6,7 @@ import { deviceLanguage, i18n } from '@/shared/lib/i18n'; // importing it initia
 import { ThemePreferenceProvider } from '@/shared/theme/ThemePreference';
 import { useColorSchemeName } from '@/shared/theme/useTheme';
 import { ErrorScreen } from '@/shared/ui';
+import { AnimatedSplash } from '@/shared/ui/AnimatedSplash';
 import { persistor, store } from '@/store';
 import { useAppSelector } from '@/store/hooks';
 import {
@@ -71,6 +72,8 @@ export default function RootLayout() {
             <KeyboardProvider>
               <DatabaseProvider>
                 <Navigation />
+                {/* Mounted with the app, when the native splash hides: takes its place, then animates out */}
+                <AnimatedSplash />
               </DatabaseProvider>
             </KeyboardProvider>
           </PreferencesBridge>

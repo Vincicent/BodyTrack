@@ -33,6 +33,7 @@
       "fr": "./locales/fr.json"
     },
     "plugins": [
+      "./plugins/withoutPushEntitlement",
       "expo-router",
       [
         "expo-splash-screen",

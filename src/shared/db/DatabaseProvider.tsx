@@ -10,7 +10,8 @@ void SplashScreen.preventAutoHideAsync(); // keep the native splash until the da
 function Migrations({ children }: { children: ReactNode }) {
   const { success, error } = useMigrations(getDb(), migrations);
   useEffect(() => {
-    if (success || error) SplashScreen.hide();
+    // On success, AnimatedSplash (src/shared/ui) hides the native splash once its own images are on screen
+    if (error) SplashScreen.hide();
   }, [success, error]);
   if (error) {
     return (
