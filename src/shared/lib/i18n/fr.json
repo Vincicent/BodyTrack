@@ -3,7 +3,8 @@
     "save": "Enregistrer",
     "cancel": "Annuler",
     "delete": "Supprimer",
-    "add": "Ajouter"
+    "add": "Ajouter",
+    "done": "OK"
   },
   "tabs": {
     "dashboard": "Tableau de bord",

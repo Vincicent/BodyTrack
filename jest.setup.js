@@ -19,3 +19,8 @@ jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () => {
     React.createElement(View, null, children, renderRightActions ? renderRightActions() : null);
   return { __esModule: true, default: Swipeable };
 });
+
+// react-native-keyboard-controller is native: use the mock it ships (KeyboardAwareScrollView becomes a plain ScrollView)
+jest.mock('react-native-keyboard-controller', () =>
+  require('react-native-keyboard-controller/jest'),
+);

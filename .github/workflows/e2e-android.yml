@@ -55,11 +55,14 @@ jobs:
             adb install android/app/build/outputs/apk/release/app-release.apk
             maestro test .maestro/ --format junit --output maestro-report.xml
 
+      # Maestro keeps them in ~/.maestro, a hidden folder (invisible in Finder once unzipped): copy them somewhere visible
       - name: Keep screenshots and logs of a failed flow
         if: failure()
+        run: cp -R ~/.maestro/tests maestro-results || true
+      - if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: maestro-debug
           path: |
-            ~/.maestro/tests/
+            maestro-results/
             maestro-report.xml
