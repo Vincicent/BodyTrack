@@ -1,0 +1,8 @@
+# Adds the first weight from the empty dashboard. Usage:
+#   - runFlow: { file: subflows/add-first-weight.yaml, env: { WEIGHT: "80" } }
+appId: com.vincicent.bodytrack
+---
+- tapOn: 'Add your first weight'
+- tapOn: 'Weight'
+- inputText: ${WEIGHT}
+- tapOn: 'Save'

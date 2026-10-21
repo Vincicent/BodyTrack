@@ -1,0 +1,12 @@
+# The core action of the app: add a weight, see it on the dashboard and in the history.
+appId: com.vincicent.bodytrack
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    file: subflows/add-first-weight.yaml
+    env:
+      WEIGHT: '72.5'
+- assertVisible: '72.5 kg'
+- tapOn: 'History'
+- assertVisible: '.*72.5 kg.*'

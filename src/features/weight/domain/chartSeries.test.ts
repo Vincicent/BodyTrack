@@ -40,6 +40,14 @@ describe('trendSummary', () => {
     expect(s).toMatchObject({ kind: 'down', days: 30 });
     expect(s.kind === 'down' && s.kg).toBeCloseTo(1.2);
   });
+  it('detects an upward trend', () => {
+    const s = trendSummary([
+      { t: 0, weight: 70, avg: 70 },
+      { t: 14 * 86_400_000, weight: 71, avg: 70.6 },
+    ]);
+    expect(s).toMatchObject({ kind: 'up', days: 14 });
+    expect(s.kind === 'up' && s.kg).toBeCloseTo(0.6);
+  });
   it('treats tiny changes as stable', () =>
     expect(
       trendSummary([

@@ -51,6 +51,8 @@ export function MeasurementForm({ unit, onSubmit }: Props) {
           render={({ field }) => (
             <TextField
               label={t(`sites.${site}`)}
+              // E2E selector: the label text and the input share the same name, so Maestro needs an id (lesson 14)
+              testID={`measurement-${site}`}
               unit={unit}
               keyboardType="decimal-pad"
               value={field.value}

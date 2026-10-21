@@ -1,0 +1,13 @@
+# Data survives an app restart (SQLite on disk, not in memory).
+appId: com.vincicent.bodytrack
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    file: subflows/add-first-weight.yaml
+    env:
+      WEIGHT: '72.5'
+- assertVisible: '72.5 kg'
+- stopApp
+- launchApp # no clearState: the data must still be there
+- assertVisible: '72.5 kg'

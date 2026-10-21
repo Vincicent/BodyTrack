@@ -1,0 +1,14 @@
+# A fresh install explains what to do on every tab, and the call to action works.
+appId: com.vincicent.bodytrack
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'No entries yet'
+- assertVisible: 'Add your first weight'
+- tapOn: 'History'
+- assertVisible: 'No entries yet'
+- tapOn: 'Measurements'
+- assertVisible: 'No measurements yet'
+- tapOn: 'Dashboard'
+- tapOn: 'Add your first weight'
+- assertVisible: 'Add weight' # the form opens

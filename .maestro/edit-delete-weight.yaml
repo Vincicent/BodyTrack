@@ -1,0 +1,22 @@
+# A wrong entry can be corrected, then deleted.
+appId: com.vincicent.bodytrack
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    file: subflows/add-first-weight.yaml
+    env:
+      WEIGHT: '80'
+- tapOn: 'History'
+- tapOn: '.*80.0 kg.*' # the row
+- assertVisible: 'Edit weight'
+- tapOn: 'Weight'
+- eraseText
+- inputText: '79'
+- tapOn: 'Save changes'
+- assertVisible: '.*79.0 kg.*'
+- tapOn: '.*79.0 kg.*'
+- tapOn: 'Delete entry'
+- assertVisible: 'Delete this entry?'
+- tapOn: '(?i)delete' # the dialog's button (Android shows it in capitals)
+- assertVisible: 'No entries yet'

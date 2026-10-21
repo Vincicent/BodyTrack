@@ -1,0 +1,17 @@
+# lb shows lb, and switching back shows exactly the same value: the stored kg never change.
+appId: com.vincicent.bodytrack
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    file: subflows/add-first-weight.yaml
+    env:
+      WEIGHT: '80'
+- tapOn: 'Settings'
+- tapOn: 'lb'
+- tapOn: 'Dashboard'
+- assertVisible: '176.4 lb'
+- tapOn: 'Settings'
+- tapOn: 'kg'
+- tapOn: 'Dashboard'
+- assertVisible: '80.0 kg' # back to exactly 80

@@ -1,0 +1,26 @@
+# Several body sites saved at once, each shown in the list.
+appId: com.vincicent.bodytrack
+---
+- launchApp:
+    clearState: true
+- tapOn: 'Measurements'
+- assertVisible: 'No measurements yet'
+- tapOn:
+    text: 'Add measurements'
+    index: 1 # the empty state's button (index 0 is the "+" in the header: it works too)
+# The label and its input share the same name ("Waist"), so target the input by its testID. Top to bottom, and wait
+# for the form to stop moving (the keyboard controller scrolls the focused field into view): no fixed sleeps.
+- tapOn:
+    id: 'measurement-neck'
+- inputText: '38'
+- waitForAnimationToEnd
+- tapOn:
+    id: 'measurement-waist'
+- inputText: '82'
+- waitForAnimationToEnd
+# No hideKeyboard: when Maestro sees no keyboard (floating keyboards), it presses Back on Android and closes the form
+- scrollUntilVisible: # 9 sites: Save is below the screen, like for a user
+    element: 'Save'
+- tapOn: 'Save'
+- assertVisible: 'Waist, 82.0 cm. '
+- assertVisible: 'Neck, 38.0 cm. '
