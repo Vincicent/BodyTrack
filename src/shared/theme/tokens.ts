@@ -1,6 +1,8 @@
 export const palette = {
-  indigo400: '#818CF8',
-  indigo600: '#4F46E5',
+  // Brand (designer's handoff, materials/icons/deliverables/HANDOFF.md): teal 800 = icon and splash background
+  teal300: '#5EEAD4',
+  teal700: '#0F766E',
+  teal800: '#115E59',
   gray50: '#F9FAFB',
   gray200: '#E5E7EB',
   gray400: '#9CA3AF',
@@ -38,7 +40,7 @@ const light: ThemeColors = {
   surface: palette.white,
   text: palette.gray900,
   textMuted: palette.gray500,
-  primary: palette.indigo600,
+  primary: palette.teal700,
   onPrimary: palette.white,
   border: palette.gray200,
   success: palette.green700,
@@ -49,7 +51,7 @@ const dark: ThemeColors = {
   surface: palette.gray900,
   text: palette.gray50,
   textMuted: palette.gray400,
-  primary: palette.indigo400,
+  primary: palette.teal300,
   onPrimary: palette.gray950,
   border: palette.gray700,
   success: palette.green400,
