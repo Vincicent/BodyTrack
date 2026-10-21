@@ -8,7 +8,11 @@ jest.mock('react-native-reanimated', () => ({
   ...jest.requireActual('react-native-reanimated'),
   useReducedMotion: jest.fn(() => false),
 }));
-jest.mock('expo-splash-screen', () => ({ hide: jest.fn(), preventAutoHideAsync: jest.fn() }));
+jest.mock('expo-splash-screen', () => ({
+  hide: jest.fn(),
+  preventAutoHideAsync: jest.fn(),
+  setOptions: jest.fn(),
+}));
 
 beforeEach(() => {
   jest.useFakeTimers();

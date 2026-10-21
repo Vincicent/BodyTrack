@@ -41,6 +41,10 @@ const ZOOM = 350;
 export const SPLASH_DURATION = ARROW + IMPACT + DIP + ZOOM;
 export const LOAD_TIMEOUT = 1500; // if an image never loads, go on without waiting any longer
 
+// Swap the native splash for this overlay instantly. iOS already does (no fade by default), but Android always fades the
+// native splash out over `duration` (400 ms by default): it would cover the arrow's first moves with a fading copy.
+SplashScreen.setOptions({ duration: 0 });
+
 /**
  * Drawn on top of the app, exactly like the native splash (which can only be a still image). When it mounts, the
  * native splash is hidden behind it, then the arrow is thrown into the target and the splash animates out.
