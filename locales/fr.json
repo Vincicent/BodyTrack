@@ -1,4 +1,6 @@
 {
-  "CFBundleDisplayName": "BodyTrack",
-  "NSPhotoLibraryUsageDescription": "BodyTrack utilise vos photos pour joindre des photos de progression à vos entrées."
+  "ios": {
+    "CFBundleDisplayName": "BodyTrack",
+    "NSPhotoLibraryUsageDescription": "BodyTrack utilise vos photos pour joindre des photos de progression à vos entrées."
+  }
 }
