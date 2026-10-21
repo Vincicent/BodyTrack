@@ -1,7 +1,7 @@
 import type { MeasurementSite } from '@/shared/lib/measurementSites';
 import type { LengthUnit } from '@/shared/lib/units';
 import { useTheme } from '@/shared/theme/useTheme';
-import { AppText, EmptyState, LoadingState, Screen } from '@/shared/ui';
+import { AppText, EmptyState, ErrorScreen, LoadingState, Screen } from '@/shared/ui';
 import { TrendChart } from '@/shared/ui/charts/TrendChart';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
@@ -12,7 +12,8 @@ import { useMeasurements } from '../hooks/useMeasurements';
 export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: LengthUnit }) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
-  const { entries, isLoading } = useMeasurements(site); // newest first
+  const { entries, isLoading, error, refresh } = useMeasurements(site); // newest first
+  if (error) return <ErrorScreen error={error} retry={refresh} />;
   if (isLoading) return <LoadingState />;
   if (entries.length === 0) {
     return (

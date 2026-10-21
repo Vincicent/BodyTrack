@@ -1,9 +1,9 @@
+import type { LengthUnit } from '@/shared/lib/units';
+import { useTheme } from '@/shared/theme/useTheme';
+import { AppText, EmptyState, ErrorScreen, LoadingState, Screen } from '@/shared/ui';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';
-import type { LengthUnit } from '@/shared/lib/units';
-import { useTheme } from '@/shared/theme/useTheme';
-import { AppText, EmptyState, LoadingState, Screen } from '@/shared/ui';
 import { formatLength, formatLengthChange, summarizeSites } from '../domain/siteSummary';
 import { useMeasurements } from '../hooks/useMeasurements';
 
@@ -11,7 +11,8 @@ import { useMeasurements } from '../hooks/useMeasurements';
 export function SiteSummaryList({ unit }: { unit: LengthUnit }) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
-  const { entries, isLoading } = useMeasurements();
+  const { entries, isLoading, error, refresh } = useMeasurements();
+  if (error) return <ErrorScreen error={error} retry={refresh} />;
   if (isLoading) return <LoadingState />;
   const sites = summarizeSites(entries);
   if (sites.length === 0) {

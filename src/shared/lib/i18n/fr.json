@@ -112,5 +112,9 @@
   },
   "photo": {
     "add": "Ajouter une photo"
+  },
+  "error": {
+    "title": "Une erreur est survenue",
+    "retry": "Réessayer"
   }
 }

@@ -112,5 +112,9 @@
   },
   "photo": {
     "add": "Add photo"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "retry": "Try again"
   }
 }

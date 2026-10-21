@@ -1,5 +1,5 @@
 import { TrendChart } from '@/shared/ui/charts/TrendChart';
-import { renderWithProviders, screen } from '@/test/render';
+import { fireEvent, renderWithProviders, screen } from '@/test/render';
 import type { MeasurementEntry } from '../domain/measurement';
 import { useMeasurements } from '../hooks/useMeasurements';
 import { SiteHistory } from './SiteHistory';
@@ -53,5 +53,21 @@ describe('SiteHistory chart', () => {
     await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
     expect(screen.getByText('Add one more entry to see your trend.')).toBeOnTheScreen();
     expect(chart).not.toHaveBeenCalled();
+  });
+});
+
+describe('SiteHistory error state (lesson 13)', () => {
+  it('shows the error with a retry instead of loading forever', async () => {
+    const refresh = jest.fn();
+    mocked.mockReturnValue({
+      entries: [],
+      isLoading: false,
+      error: new Error('Disk full'),
+      refresh,
+    });
+    await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
+    expect(screen.getByText('Something went wrong')).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+    expect(refresh).toHaveBeenCalled();
   });
 });

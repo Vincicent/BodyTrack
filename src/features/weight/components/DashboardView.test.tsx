@@ -1,6 +1,6 @@
 import { settingsSlice } from '@/features/settings';
 import { makeWeight } from '@/test/factories';
-import { renderWithProviders, screen } from '@/test/render';
+import { fireEvent, renderWithProviders, screen } from '@/test/render';
 import { useWeightEntries } from '../hooks/useWeightEntries';
 import { DashboardView } from './DashboardView';
 
@@ -20,6 +20,20 @@ const twoWeeks = [
 ];
 
 describe('DashboardView', () => {
+  it('shows the error with a retry instead of loading forever', async () => {
+    const refresh = jest.fn();
+    mocked.mockReturnValue({
+      entries: [],
+      isLoading: false,
+      error: new Error('Disk full'),
+      refresh,
+    });
+    await renderWithProviders(<DashboardView />);
+    expect(screen.getByText('Something went wrong')).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+    expect(refresh).toHaveBeenCalled();
+  });
+
   it('shows the empty state without entries', async () => {
     mocked.mockReturnValue({ entries: [], isLoading: false, error: undefined, refresh: jest.fn() });
     await renderWithProviders(<DashboardView />);

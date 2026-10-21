@@ -1,5 +1,5 @@
+import { fireEvent, renderWithProviders, screen, userEvent } from '@/test/render';
 import { router } from 'expo-router';
-import { renderWithProviders, screen, userEvent } from '@/test/render';
 import type { MeasurementEntry } from '../domain/measurement';
 import { useMeasurements } from '../hooks/useMeasurements';
 import { SiteSummaryList } from './SiteSummaryList';
@@ -48,5 +48,21 @@ describe('SiteSummaryList', () => {
       pathname: '/measurement/[site]',
       params: { site: 'hips' },
     });
+  });
+});
+
+describe('SiteSummaryList error state (lesson 13)', () => {
+  it('shows the error with a retry instead of loading forever', async () => {
+    const refresh = jest.fn();
+    mocked.mockReturnValue({
+      entries: [],
+      isLoading: false,
+      error: new Error('Disk full'),
+      refresh,
+    });
+    await renderWithProviders(<SiteSummaryList unit="cm" />);
+    expect(screen.getByText('Something went wrong')).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
+    expect(refresh).toHaveBeenCalled();
   });
 });

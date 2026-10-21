@@ -5,9 +5,16 @@ import { DatabaseProvider } from '@/shared/db/DatabaseProvider';
 import { deviceLanguage, i18n } from '@/shared/lib/i18n'; // importing it initialises translations
 import { ThemePreferenceProvider } from '@/shared/theme/ThemePreference';
 import { useColorSchemeName } from '@/shared/theme/useTheme';
+import { ErrorScreen } from '@/shared/ui';
 import { persistor, store } from '@/store';
 import { useAppSelector } from '@/store/hooks';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import {
+  DarkTheme,
+  DefaultTheme,
+  Stack,
+  ThemeProvider,
+  type ErrorBoundaryProps,
+} from 'expo-router';
 import { useEffect, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -48,6 +55,11 @@ function Navigation() {
       </Stack>
     </ThemeProvider>
   );
+}
+
+/** Expo Router renders this instead of the layout when anything below throws. */
+export function ErrorBoundary(props: ErrorBoundaryProps) {
+  return <ErrorScreen {...props} />;
 }
 
 export default function RootLayout() {

@@ -1,5 +1,5 @@
 import { selectWeightUnit } from '@/features/settings';
-import { EmptyState, LoadingState } from '@/shared/ui';
+import { EmptyState, ErrorScreen, LoadingState } from '@/shared/ui';
 import { useAppSelector } from '@/store/hooks';
 import { FlashList } from '@shopify/flash-list';
 import { useTranslation } from 'react-i18next';
@@ -12,8 +12,9 @@ import { WeightRow } from './WeightRow';
 // No <Screen> wrapper: a virtualised list must not be inside a ScrollView.
 export function HistoryList() {
   const { t, i18n } = useTranslation();
-  const { entries, isLoading } = useWeightEntries();
+  const { entries, isLoading, error, refresh } = useWeightEntries();
   const unit = useAppSelector(selectWeightUnit);
+  if (error) return <ErrorScreen error={error} retry={refresh} />;
   if (isLoading) return <LoadingState />;
   if (entries.length === 0) {
     return (
