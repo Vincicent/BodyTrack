@@ -24,7 +24,8 @@ jobs:
       # Release build: the JavaScript is inside the APK (no Metro). android/ is generated, as on your Mac. Prebuild signs
       # release builds with the debug key, so no secret is needed. x86_64 only: the emulator's processor type.
       - run: npx expo prebuild --platform android --no-install
-      - run: ./gradlew assembleRelease
+      # No lint here: it's for store builds (EAS), it doubles the build time and runs out of memory on GitHub's machine
+      - run: ./gradlew assembleRelease -x lintVitalAnalyzeRelease -x lintVitalRelease -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g"
         working-directory: android
         env: { ORG_GRADLE_PROJECT_reactNativeArchitectures: x86_64 }
 
