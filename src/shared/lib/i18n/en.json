@@ -9,7 +9,8 @@
   },
   "tabs": {
     "dashboard": "Dashboard",
-    "history": "History",
+    "weight": "Weight",
+    "weightLog": "Weight log",
     "measurements": "Measurements",
     "food": "Food",
     "settings": "Settings"

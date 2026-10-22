@@ -1,11 +1,13 @@
 import { fireEvent, renderWithProviders, screen, userEvent } from '@/test/render';
 import { router } from 'expo-router';
+import { useIsWide } from '@/shared/lib/useIsWide';
 import type { MeasurementEntry } from '../domain/measurement';
 import { useMeasurements } from '../hooks/useMeasurements';
 import { SiteSummaryList } from './SiteSummaryList';
 
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 jest.mock('../hooks/useMeasurements');
+jest.mock('@/shared/lib/useIsWide', () => ({ useIsWide: jest.fn(() => false) }));
 const mocked = jest.mocked(useMeasurements);
 const loaded = (entries: MeasurementEntry[]) => ({
   entries,
@@ -64,5 +66,15 @@ describe('SiteSummaryList error state', () => {
     expect(screen.getByText('Something went wrong')).toBeOnTheScreen();
     await fireEvent.press(screen.getByRole('button', { name: 'Try again' }));
     expect(refresh).toHaveBeenCalled();
+  });
+
+  it.each([
+    [false, 'column'], // phone: the map above the list
+    [true, 'row'], // tablet or wide window: the map on the left, the list on the right
+  ] as const)('wide screen: %s → %s layout', async (wide, direction) => {
+    jest.mocked(useIsWide).mockReturnValue(wide);
+    mocked.mockReturnValue(loaded([m('waist', 84, 1)]));
+    await renderWithProviders(<SiteSummaryList unit="cm" />);
+    expect(screen.getByTestId('measurements-layout')).toHaveStyle({ flexDirection: direction });
   });
 });

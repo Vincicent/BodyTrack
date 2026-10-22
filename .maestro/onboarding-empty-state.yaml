@@ -5,7 +5,7 @@ appId: com.vincicent.bodytrack
     clearState: true
 - assertVisible: 'No entries yet'
 - assertVisible: 'Add your first weight'
-- tapOn: '.*History.*' # tab: iOS reads it as "History, tab, n of 4"
+- tapOn: 'Weight(, tab.*)?' # the tab: "Weight", which iOS reads as "Weight, tab, 2 of 5" (not "Current weight")
 - assertVisible: 'No entries yet'
 - tapOn: '.*Measurements.*' # tab: iOS reads it as "Measurements, tab, n of 4"
 - assertVisible: 'No measurements yet'

@@ -20,9 +20,10 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="history"
+        name="weight"
         options={{
-          title: t('tabs.history'),
+          title: t('tabs.weightLog'), // header: "Weight log"
+          tabBarLabel: t('tabs.weight'), // tab bar: short, 5 tabs share the width
           headerRight: () => (
             <Pressable
               accessibilityRole="button"

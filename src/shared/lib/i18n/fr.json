@@ -9,7 +9,8 @@
   },
   "tabs": {
     "dashboard": "Tableau de bord",
-    "history": "Historique",
+    "weight": "Poids",
+    "weightLog": "Suivi du poids",
     "measurements": "Mensurations",
     "food": "Aliments",
     "settings": "Réglages"
