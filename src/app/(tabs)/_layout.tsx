@@ -61,6 +61,16 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="food"
+        options={{
+          title: t('food.title'), // header: "Food lookup"
+          tabBarLabel: t('tabs.food'), // tab bar: short, 5 tabs share the width
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="barcode-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: t('tabs.settings'),

@@ -64,6 +64,15 @@
         {
           "photosPermission": "BodyTrack uses your photos to attach progress pictures to your entries."
         }
+      ],
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "BodyTrack uses the camera to scan the barcode of food products.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
       ]
     ],
     "experiments": {
