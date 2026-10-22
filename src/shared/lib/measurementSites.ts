@@ -7,7 +7,8 @@ export const MEASUREMENT_SITES = [
   'armR',
   'thighL',
   'thighR',
-  'calf',
+  'calfL',
+  'calfR',
 ] as const;
 export type MeasurementSite = (typeof MEASUREMENT_SITES)[number];
 

@@ -36,3 +36,17 @@ export function toRows(values: MeasurementFormOutput, unit: LengthUnit): NewMeas
       note: null,
     }));
 }
+
+/** Editing ONE measurement: its site is fixed, the value is required (an edit can't empty it: delete it instead). */
+export const measurementEntryFormSchema = z.object({
+  value: z
+    .string()
+    .trim()
+    .min(1, 'errors.required')
+    .transform((s) => Number(s.replace(',', '.')))
+    .pipe(z.number({ message: 'errors.notANumber' }).positive('errors.positive')),
+  // refine runs at validation time; z.date().max(new Date()) would freeze "now" when the module loads
+  measuredAt: z.date().refine((d) => d.getTime() <= Date.now() + 60_000, 'errors.futureDate'),
+});
+export type MeasurementEntryFormInput = z.input<typeof measurementEntryFormSchema>;
+export type MeasurementEntryFormOutput = z.output<typeof measurementEntryFormSchema>;

@@ -53,6 +53,10 @@ function Navigation() {
           name="measurement/new"
           options={{ presentation: 'modal', title: t('measurement.addTitle') }}
         />
+        <Stack.Screen
+          name="measurement/edit/[id]"
+          options={{ title: t('measurement.editTitle') }}
+        />
       </Stack>
     </ThemeProvider>
   );
