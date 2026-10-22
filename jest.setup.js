@@ -24,3 +24,9 @@ jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () => {
 jest.mock('react-native-keyboard-controller', () =>
   require('react-native-keyboard-controller/jest'),
 );
+
+// Safe areas (notch, navigation bar) come from a native module: use the mock it ships (no insets, unless a test sets some)
+jest.mock(
+  'react-native-safe-area-context',
+  () => require('react-native-safe-area-context/jest/mock').default,
+);

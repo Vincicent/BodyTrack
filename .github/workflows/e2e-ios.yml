@@ -31,10 +31,12 @@ jobs:
           -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
           -derivedDataPath build CODE_SIGNING_ALLOWED=NO -quiet
 
+      # Pinned: a new Maestro release can't break CI without a change here (2.11.0 is the version tested locally)
       - name: Install Maestro
         run: |
           curl -fsSL "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+        env: { MAESTRO_VERSION: 2.11.0 }
 
       # The machine's simulator models change with Xcode versions: take the first available iPhone
       - name: Start a simulator and install the app
@@ -45,9 +47,14 @@ jobs:
           xcrun simctl bootstatus "$UDID" -b
           xcrun simctl install "$UDID" ios/build/Build/Products/Release-iphonesimulator/BodyTrack.app
 
+      # Maestro first installs its own test app (the "driver") on the simulator, and waits 2 minutes by default for it to
+      # answer. GitHub's macOS machines are sometimes slower than that ("iOS driver not ready in time"): wait up to 5
+      # minutes (in ms). If the run fails anyway, run the flows once more, as on Android.
       - name: Run the flows
-        env: { MAESTRO_CLI_NO_ANALYTICS: 1 }
-        run: maestro --device "$UDID" test .maestro/ --format junit --output maestro-report.xml
+        env: { MAESTRO_CLI_NO_ANALYTICS: 1, MAESTRO_DRIVER_STARTUP_TIMEOUT: 300000 }
+        run: |
+          maestro --device "$UDID" test .maestro/ --format junit --output maestro-report.xml ||
+            maestro --device "$UDID" test .maestro/ --format junit --output maestro-report.xml
 
       # Maestro keeps them in ~/.maestro, a hidden folder (invisible in Finder once unzipped): copy them somewhere visible
       - name: Keep screenshots and logs of a failed flow
