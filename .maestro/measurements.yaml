@@ -3,7 +3,7 @@ appId: com.vincicent.bodytrack
 ---
 - launchApp:
     clearState: true
-- tapOn: 'Measurements'
+- tapOn: '.*Measurements.*' # tab: iOS reads it as "Measurements, tab, n of 4"
 - assertVisible: 'No measurements yet'
 - tapOn:
     text: 'Add measurements'
@@ -14,13 +14,24 @@ appId: com.vincicent.bodytrack
     id: 'measurement-neck'
 - inputText: '38'
 - waitForAnimationToEnd
+# Waist is 2 fields below: go there with the toolbar's ↓, like a user (on a small screen the keyboard covers it).
+# Optional, then tap Waist: without an on-screen keyboard there's no toolbar, but nothing covers Waist either.
+- tapOn:
+    id: 'keyboard.toolbar.next'
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    id: 'keyboard.toolbar.next'
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     id: 'measurement-waist'
 - inputText: '82'
 - waitForAnimationToEnd
-# No hideKeyboard: when Maestro sees no keyboard (floating keyboards), it presses Back on Android and closes the form
-- scrollUntilVisible: # 9 sites: Save is below the screen, like for a user
-    element: 'Save'
-- tapOn: 'Save'
+# 9 sites: Save is below the screen, like for a user
+- runFlow:
+    file: subflows/tap-below-keyboard.yaml
+    env:
+      BUTTON: 'Save'
 - assertVisible: 'Waist, 82.0 cm. '
 - assertVisible: 'Neck, 38.0 cm. '

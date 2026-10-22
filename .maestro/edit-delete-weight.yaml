@@ -7,16 +7,32 @@ appId: com.vincicent.bodytrack
     file: subflows/add-first-weight.yaml
     env:
       WEIGHT: '80'
-- tapOn: 'History'
+- tapOn: '.*History.*' # tab: iOS reads it as "History, tab, n of 4"
 - tapOn: '.*80.0 kg.*' # the row
 - assertVisible: 'Edit weight'
-- tapOn: 'Weight'
-- eraseText
-- inputText: '79'
-- tapOn: 'Save changes'
-- assertVisible: '.*79.0 kg.*'
+# On a slow CI simulator, typing can drop a character (GitHub saved "7" instead of "79"): retype until the field holds 79
+- retry:
+    maxRetries: 3
+    commands:
+      - tapOn:
+          id: 'weight-input' # the input, not its label
+      - eraseText
+      - inputText: '79'
+      - assertVisible:
+          id: 'weight-input'
+          text: '79'
+- runFlow:
+    file: subflows/tap-below-keyboard.yaml
+    env:
+      BUTTON: 'Save changes'
+- extendedWaitUntil: # slow CI simulators: give the list time to update
+    visible: '.*79.0 kg.*'
+    timeout: 15000
 - tapOn: '.*79.0 kg.*'
-- tapOn: 'Delete entry'
+- runFlow:
+    file: subflows/tap-below-keyboard.yaml
+    env:
+      BUTTON: 'Delete entry'
 - assertVisible: 'Delete this entry?'
 - tapOn: '(?i)delete' # the dialog's button (Android shows it in capitals)
 - assertVisible: 'No entries yet'

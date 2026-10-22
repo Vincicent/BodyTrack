@@ -19,3 +19,14 @@ jest.mock('react-native-gesture-handler/ReanimatedSwipeable', () => {
     React.createElement(View, null, children, renderRightActions ? renderRightActions() : null);
   return { __esModule: true, default: Swipeable };
 });
+
+// react-native-keyboard-controller is native: use the mock it ships (KeyboardAwareScrollView becomes a plain ScrollView)
+jest.mock('react-native-keyboard-controller', () =>
+  require('react-native-keyboard-controller/jest'),
+);
+
+// Safe areas (notch, navigation bar) come from a native module: use the mock it ships (no insets, unless a test sets some)
+jest.mock(
+  'react-native-safe-area-context',
+  () => require('react-native-safe-area-context/jest/mock').default,
+);

@@ -3,6 +3,10 @@
 appId: com.vincicent.bodytrack
 ---
 - tapOn: 'Add your first weight'
-- tapOn: 'Weight'
+- tapOn:
+    id: 'weight-input' # the input, not its label
 - inputText: ${WEIGHT}
-- tapOn: 'Save'
+- runFlow:
+    file: tap-below-keyboard.yaml
+    env:
+      BUTTON: 'Save'

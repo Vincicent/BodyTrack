@@ -3,7 +3,8 @@
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
-    "add": "Add"
+    "add": "Add",
+    "done": "Done"
   },
   "tabs": {
     "dashboard": "Dashboard",

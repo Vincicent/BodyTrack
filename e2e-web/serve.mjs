@@ -1,5 +1,5 @@
 // Serves the exported web build (dist/) like production: with the COOP/COEP headers that SQLite in the browser needs
-// (lesson 07), and Expo Router's static pages (/entry/new → entry/new.html).
+// , and Expo Router's static pages (/entry/new → entry/new.html).
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';

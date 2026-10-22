@@ -1,0 +1,6 @@
+# Files the runtime fingerprint must skip (expo-updates, runtimeVersion "fingerprint"; same syntax as .gitignore).
+# A local Android build rewrites this manifest inside node_modules (React Native's Gradle setup removes its old
+# "package" attribute). EAS installs a fresh copy, so without this line every EAS build started from a Mac that once
+# built Android fails with "Runtime version calculated on local machine not equal to runtime version calculated during
+# build".
+node_modules/@react-native-masked-view/masked-view/android/src/main/AndroidManifest.xml

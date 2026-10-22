@@ -56,7 +56,7 @@ describe('SiteHistory chart', () => {
   });
 });
 
-describe('SiteHistory error state (lesson 13)', () => {
+describe('SiteHistory error state', () => {
   it('shows the error with a retry instead of loading forever', async () => {
     const refresh = jest.fn();
     mocked.mockReturnValue({

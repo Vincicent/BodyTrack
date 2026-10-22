@@ -41,6 +41,8 @@ export function WeightForm({ unit, defaultValues, submitLabel, onSubmit }: Props
         render={({ field }) => (
           <TextField
             label={t('form.weight')}
+            // E2E selector: on iOS, tapping the label "Weight" doesn't focus the input
+            testID="weight-input"
             unit={unit}
             keyboardType="decimal-pad"
             autoFocus

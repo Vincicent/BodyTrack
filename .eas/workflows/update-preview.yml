@@ -1,0 +1,18 @@
+# every push to main publishes the JavaScript to the "preview" channel, so preview builds (your phone) always
+# run the latest version. Only if the checks pass. A native change still needs a new build (runtimeVersion protects
+# older builds: they ignore updates they can't run).
+name: update-preview
+on:
+  push:
+    branches: ['main']
+jobs:
+  checks:
+    steps:
+      - uses: eas/checkout
+      - uses: eas/install_node_modules
+      - run: npm run check
+  update_preview:
+    needs: [checks]
+    type: update
+    params:
+      channel: preview
