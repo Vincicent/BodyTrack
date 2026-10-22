@@ -1,4 +1,5 @@
 import type { LengthUnit } from '@/shared/lib/units';
+import { useIsWide } from '@/shared/lib/useIsWide';
 import { useTheme } from '@/shared/theme/useTheme';
 import { AppText, EmptyState, ErrorScreen, LoadingState, Screen } from '@/shared/ui';
 import { router } from 'expo-router';
@@ -11,11 +12,13 @@ import { BodyMap } from './body/BodyMap';
 /**
  * The Measurements tab: the body map (every site on a silhouette), then one row per measured site, with its latest
  * value and the change since the start. The list stays: quicker to scan, and what screen reader users prefer.
+ * On a tablet or a wide window, the map goes on the left (30% of the width, at least 320 px) and the list on the right.
  */
 export function SiteSummaryList({ unit }: { unit: LengthUnit }) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const { entries, isLoading, error, refresh } = useMeasurements();
+  const wide = useIsWide();
   if (error) return <ErrorScreen error={error} retry={refresh} />;
   if (isLoading) return <LoadingState />;
   const sites = summarizeSites(entries);
@@ -30,44 +33,60 @@ export function SiteSummaryList({ unit }: { unit: LengthUnit }) {
   const day = new Intl.DateTimeFormat(i18n.language, { day: 'numeric', month: 'short' });
   return (
     <Screen>
-      <BodyMap summaries={sites} unit={unit} />
-      {sites.map(({ site, latest, changeCm }) => {
-        const name = t(`sites.${site}`);
-        const value = formatLength(latest.valueCm, unit, i18n.language);
-        const change = formatLengthChange(changeCm, unit, i18n.language);
-        const arrow =
-          changeCm === null || change?.startsWith('±') ? '' : changeCm > 0 ? '▲ ' : '▼ ';
-        const sinceStart = change ? t('measurement.sinceStart', { value: change }) : '';
-        return (
-          <Pressable
-            key={site}
-            accessibilityRole="button"
-            accessibilityLabel={`${name}, ${value}. ${sinceStart}`}
-            onPress={() => router.push({ pathname: '/measurement/[site]', params: { site } })}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: theme.spacing.md,
-              borderBottomWidth: 1,
-              borderBottomColor: theme.colors.border,
-            }}
-          >
-            <View>
-              <AppText>{name}</AppText>
-              <AppText variant="caption">{day.format(latest.measuredAt)}</AppText>
-            </View>
-            <View style={{ alignItems: 'flex-end' }}>
-              <AppText>{value}</AppText>
-              {change ? (
-                <AppText variant="caption">
-                  {arrow}
-                  {sinceStart}
-                </AppText>
-              ) : null}
-            </View>
-          </Pressable>
-        );
-      })}
+      <View
+        testID="measurements-layout"
+        style={{
+          flexDirection: wide ? 'row' : 'column',
+          alignItems: wide ? 'flex-start' : 'stretch',
+          gap: theme.spacing.xl,
+        }}
+      >
+        <View
+          // 30% of the width, but never less than a small phone's map: below that, the body shrinks and labels clip
+          style={wide ? { width: '30%', minWidth: 320 } : undefined}
+        >
+          <BodyMap summaries={sites} unit={unit} />
+        </View>
+        <View style={wide ? { flex: 1 } : undefined}>
+          {sites.map(({ site, latest, changeCm }) => {
+            const name = t(`sites.${site}`);
+            const value = formatLength(latest.valueCm, unit, i18n.language);
+            const change = formatLengthChange(changeCm, unit, i18n.language);
+            const arrow =
+              changeCm === null || change?.startsWith('±') ? '' : changeCm > 0 ? '▲ ' : '▼ ';
+            const sinceStart = change ? t('measurement.sinceStart', { value: change }) : '';
+            return (
+              <Pressable
+                key={site}
+                accessibilityRole="button"
+                accessibilityLabel={`${name}, ${value}. ${sinceStart}`}
+                onPress={() => router.push({ pathname: '/measurement/[site]', params: { site } })}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingVertical: theme.spacing.md,
+                  borderBottomWidth: 1,
+                  borderBottomColor: theme.colors.border,
+                }}
+              >
+                <View>
+                  <AppText>{name}</AppText>
+                  <AppText variant="caption">{day.format(latest.measuredAt)}</AppText>
+                </View>
+                <View style={{ alignItems: 'flex-end' }}>
+                  <AppText>{value}</AppText>
+                  {change ? (
+                    <AppText variant="caption">
+                      {arrow}
+                      {sinceStart}
+                    </AppText>
+                  ) : null}
+                </View>
+              </Pressable>
+            );
+          })}
+        </View>
+      </View>
     </Screen>
   );
 }

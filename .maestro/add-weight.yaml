@@ -1,4 +1,4 @@
-# The core action of the app: add a weight, see it on the dashboard and in the history.
+# The core action of the app: add a weight, see it on the dashboard and in the Weight tab.
 appId: com.vincicent.bodytrack
 ---
 - launchApp:
@@ -8,5 +8,5 @@ appId: com.vincicent.bodytrack
     env:
       WEIGHT: '72.5'
 - assertVisible: '72.5 kg'
-- tapOn: '.*History.*' # tab: iOS reads it as "History, tab, n of 4"
+- tapOn: 'Weight(, tab.*)?' # the tab: "Weight", which iOS reads as "Weight, tab, 2 of 5" (not "Current weight")
 - assertVisible: '.*72.5 kg.*'
