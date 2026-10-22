@@ -4,7 +4,8 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "add": "Ajouter",
-    "clear": "Effacer"
+    "clear": "Effacer",
+    "done": "OK"
   },
   "tabs": {
     "dashboard": "Tableau de bord",

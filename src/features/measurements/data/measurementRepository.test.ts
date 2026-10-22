@@ -34,7 +34,7 @@ describe('measurementRepository', () => {
     expect(repo.listQuery().all()).toEqual([expect.objectContaining({ site: 'hips' })]);
   });
 
-  it('deletes every measurement ("Delete all data", lesson 12)', () => {
+  it('deletes every measurement ("Delete all data")', () => {
     repo.addMany([valid, { ...valid, site: 'hips', valueCm: 98 }]);
     repo.removeAll();
     expect(repo.listQuery().all()).toHaveLength(0);

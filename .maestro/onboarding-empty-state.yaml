@@ -5,10 +5,10 @@ appId: com.vincicent.bodytrack
     clearState: true
 - assertVisible: 'No entries yet'
 - assertVisible: 'Add your first weight'
-- tapOn: 'History'
+- tapOn: '.*History.*' # tab: iOS reads it as "History, tab, n of 4"
 - assertVisible: 'No entries yet'
-- tapOn: 'Measurements'
+- tapOn: '.*Measurements.*' # tab: iOS reads it as "Measurements, tab, n of 4"
 - assertVisible: 'No measurements yet'
-- tapOn: 'Dashboard'
+- tapOn: '.*Dashboard.*' # tab: iOS reads it as "Dashboard, tab, n of 4"
 - tapOn: 'Add your first weight'
 - assertVisible: 'Add weight' # the form opens

@@ -7,11 +7,11 @@ appId: com.vincicent.bodytrack
     file: subflows/add-first-weight.yaml
     env:
       WEIGHT: '80'
-- tapOn: 'Settings'
+- tapOn: '.*Settings.*' # tab: iOS reads it as "Settings, tab, n of 4"
 - tapOn: 'lb'
-- tapOn: 'Dashboard'
+- tapOn: '.*Dashboard.*' # tab: iOS reads it as "Dashboard, tab, n of 4"
 - assertVisible: '176.4 lb'
-- tapOn: 'Settings'
+- tapOn: '.*Settings.*' # tab: iOS reads it as "Settings, tab, n of 4"
 - tapOn: 'kg'
-- tapOn: 'Dashboard'
+- tapOn: '.*Dashboard.*' # tab: iOS reads it as "Dashboard, tab, n of 4"
 - assertVisible: '80.0 kg' # back to exactly 80

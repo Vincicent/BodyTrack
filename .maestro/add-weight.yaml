@@ -8,5 +8,5 @@ appId: com.vincicent.bodytrack
     env:
       WEIGHT: '72.5'
 - assertVisible: '72.5 kg'
-- tapOn: 'History'
+- tapOn: '.*History.*' # tab: iOS reads it as "History, tab, n of 4"
 - assertVisible: '.*72.5 kg.*'
