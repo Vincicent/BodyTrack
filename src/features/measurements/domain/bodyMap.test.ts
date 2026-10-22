@@ -3,6 +3,7 @@ import {
   BODY,
   bodyMapLayout,
   LABEL,
+  LABEL_ROWS,
   SITE_ANCHORS,
   smoothClosedPath,
   spreadLabels,
@@ -128,6 +129,34 @@ describe('bodyMapLayout', () => {
       }
     },
   );
+
+  it('puts each pair on one row: neck and chest, both arms, waist and hips, both thighs, both calves', () => {
+    const layout = bodyMapLayout(358);
+    const y = (site: string) => layout.sites.find((s) => s.site === site)!.labelY;
+    for (const [left, right] of LABEL_ROWS) expect(y(left)).toBe(y(right));
+    // rows in body order, top to bottom
+    const rowYs = LABEL_ROWS.map(([left]) => y(left));
+    expect(rowYs).toEqual([...rowYs].sort((a, b) => a - b));
+  });
+
+  it('has every site in exactly one row, the left one on the left', () => {
+    expect(LABEL_ROWS.flat().sort()).toEqual([...MEASUREMENT_SITES].sort());
+    for (const [left, right] of LABEL_ROWS) {
+      expect(SITE_ANCHORS[left].side).toBe('left');
+      expect(SITE_ANCHORS[right].side).toBe('right');
+    }
+  });
+
+  it('keeps each dot where it is on the body: only the label moves', () => {
+    const layout = bodyMapLayout(358);
+    const { x, y, scale } = layout.figure;
+    for (const s of layout.sites) {
+      expect(s.dot).toEqual({
+        x: x + SITE_ANCHORS[s.site].x * scale,
+        y: y + SITE_ANCHORS[s.site].y * scale,
+      });
+    }
+  });
 
   it('fits the body between the two label columns on a small phone', () => {
     const { figure } = bodyMapLayout(320 - 32); // 320 px screen minus the 16 px gutters

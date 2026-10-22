@@ -154,6 +154,18 @@ export function spreadLabels(wanted: number[], gap: number, top: number, bottom:
   return out;
 }
 
+/**
+ * Labels go in rows, one pair per row, left and right of the body at the same height: easier to read and compare
+ * (both arms side by side). Each label's leader line still points at its own dot, wherever it is on the body.
+ */
+export const LABEL_ROWS: readonly (readonly [MeasurementSite, MeasurementSite])[] = [
+  ['neck', 'chest'],
+  ['armR', 'armL'],
+  ['waist', 'hips'],
+  ['thighR', 'thighL'],
+  ['calfR', 'calfL'],
+];
+
 export const LABEL = { width: 84, height: 40, gap: 42 };
 const MAX_SCALE = 1.5; // on a tablet, the body stops growing: the labels would drift far from it
 const PADDING = 12;
@@ -185,17 +197,15 @@ export function bodyMapLayout(width: number): BodyMapLayout {
     y: figure.y + p.y * scale,
   });
 
+  // One height per row: each row sits at its highest dot, then rows are spread so none overlaps the next
+  const rowYs = spreadLabels(
+    LABEL_ROWS.map((row) => Math.min(...row.map((s) => toScreen(SITE_ANCHORS[s]).y))),
+    LABEL.gap,
+    LABEL.height / 2,
+    height - LABEL.height / 2,
+  );
   const placed = new Map<MeasurementSite, number>();
-  for (const side of ['left', 'right'] as const) {
-    const sites = MEASUREMENT_SITES.filter((s) => SITE_ANCHORS[s].side === side);
-    const ys = spreadLabels(
-      sites.map((s) => toScreen(SITE_ANCHORS[s]).y),
-      LABEL.gap,
-      LABEL.height / 2,
-      height - LABEL.height / 2,
-    );
-    sites.forEach((s, i) => placed.set(s, ys[i]!));
-  }
+  LABEL_ROWS.forEach((row, i) => row.forEach((s) => placed.set(s, rowYs[i]!)));
 
   return {
     width,
