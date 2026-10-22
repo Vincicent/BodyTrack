@@ -4,6 +4,7 @@ import { backupToCsv, parseBackupCsv } from '@/features/export/domain/csv';
 import { pickCsvText } from '@/features/export/pickCsvText';
 import { shareCsv } from '@/features/export/shareCsv';
 import { measurementRepository } from '@/features/measurements/data/measurementRepository';
+import { deleteAllPhotos } from '@/features/weight/data/photos';
 import { weightRepository } from '@/features/weight/data/weightRepository';
 import { confirm } from '@/shared/lib/confirm';
 import { AppText, Button, Card } from '@/shared/ui';
@@ -51,6 +52,7 @@ export function DataSection() {
     });
     if (!ok) return;
     weightRepository.removeAll();
+    deleteAllPhotos();
     measurementRepository.removeAll();
     dispatch(resetSettings());
   };

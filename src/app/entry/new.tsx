@@ -3,7 +3,7 @@ import { WeightForm } from '@/features/weight/components/WeightForm';
 import { useSaveWeight } from '@/features/weight/hooks/useSaveWeight';
 import { haptics } from '@/shared/lib/haptics';
 import { goBackOrHome } from '@/shared/lib/navigation';
-import { Button, Screen } from '@/shared/ui';
+import { HeaderButton, Screen } from '@/shared/ui';
 import { useAppSelector } from '@/store/hooks';
 import { Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +17,7 @@ export default function NewEntryScreen() {
       <Stack.Screen
         options={{
           headerLeft: () => (
-            <Button title={t('common.cancel')} variant="ghost" onPress={() => goBackOrHome()} />
+            <HeaderButton title={t('common.cancel')} onPress={() => goBackOrHome()} />
           ),
         }}
       />

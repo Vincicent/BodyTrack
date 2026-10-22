@@ -3,10 +3,14 @@ import { TrendChart } from '@/shared/ui/charts/TrendChart';
 import { fireEvent, renderWithProviders, screen, userEvent } from '@/test/render';
 import type { MeasurementEntry } from '../domain/measurement';
 import { useMeasurements } from '../hooks/useMeasurements';
+import { measurementRepository } from '../data/measurementRepository';
 import { SiteHistory } from './SiteHistory';
 
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 jest.mock('../hooks/useMeasurements');
+jest.mock('../data/measurementRepository', () => ({
+  measurementRepository: { remove: jest.fn() },
+}));
 jest.mock('@/shared/ui/charts/TrendChart', () => ({ TrendChart: jest.fn(() => null) })); // Skia never loads in Jest
 const chart = jest.mocked(TrendChart);
 const mocked = jest.mocked(useMeasurements);
@@ -34,21 +38,43 @@ describe('SiteHistory', () => {
   });
 });
 
-describe('SiteHistory: correcting a measurement', () => {
-  it('opens a measurement to edit or delete it when tapped', async () => {
-    const user = userEvent.setup();
+describe('SiteHistory: opening, editing, deleting a measurement', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
     mocked.mockReturnValue({
-      entries: [m(84, 5), m(85, 3)],
+      entries: [m(84, 5)],
       isLoading: false,
       error: undefined,
       refresh: jest.fn(),
     });
+  });
+
+  it('opens its details when tapped', async () => {
+    const user = userEvent.setup();
     await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
     await user.press(screen.getByRole('button', { name: /84\.0 cm/ }));
+    expect(router.push).toHaveBeenCalledWith({
+      pathname: '/measurement/entry/[id]',
+      params: { id: '5' },
+    });
+  });
+
+  // The swipe actions (Jest renders them next to the row; on a phone they appear when swiping left)
+  it('swipe → Edit opens the form', async () => {
+    const user = userEvent.setup();
+    await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
+    await user.press(screen.getByRole('button', { name: 'Edit' }));
     expect(router.push).toHaveBeenCalledWith({
       pathname: '/measurement/edit/[id]',
       params: { id: '5' },
     });
+  });
+
+  it('swipe → Delete deletes it', async () => {
+    const user = userEvent.setup();
+    await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
+    await user.press(screen.getByRole('button', { name: 'Delete' }));
+    expect(measurementRepository.remove).toHaveBeenCalledWith(5);
   });
 });
 

@@ -5,7 +5,8 @@
     "delete": "Delete",
     "add": "Add",
     "clear": "Clear",
-    "done": "Done"
+    "done": "Done",
+    "edit": "Edit"
   },
   "tabs": {
     "dashboard": "Dashboard",
@@ -28,7 +29,8 @@
   "entry": {
     "addTitle": "Add weight",
     "editTitle": "Edit weight",
-    "editHeading": "Edit entry #{{id}}"
+    "editHeading": "Edit entry #{{id}}",
+    "detailsTitle": "Weight entry"
   },
   "measurement": {
     "addTitle": "Add measurements",
@@ -50,6 +52,11 @@
     "deleteEntry": "Delete entry",
     "deleteConfirmTitle": "Delete this entry?",
     "deleteConfirmMessage": "This can't be undone."
+  },
+  "details": {
+    "sincePrevious": "{{value}} since the previous one",
+    "first": "First entry",
+    "note": "Note"
   },
   "errors": {
     "required": "Required",
@@ -114,11 +121,16 @@
     "csv": "Export CSV",
     "imported": "{{count}} imported, {{skipped}} skipped",
     "import": "Import CSV",
-    "backupHint": "Your data stays on this device. Export it regularly as a backup.",
+    "backupHint": "Your data stays on this device. Export it regularly as a backup (photos stay on the device and aren't in the CSV).",
     "notBodyTrack": "This file isn't a BodyTrack export."
   },
   "photo": {
-    "add": "Add photo"
+    "add": "Add photo",
+    "change": "Change photo",
+    "remove": "Remove photo",
+    "label": "Progress photo",
+    "withPhoto": "with a photo",
+    "error": "Couldn't open this photo. Try another one."
   },
   "error": {
     "title": "Something went wrong",

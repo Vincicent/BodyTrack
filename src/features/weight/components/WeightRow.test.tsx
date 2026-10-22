@@ -48,11 +48,27 @@ describe('WeightRow', () => {
 });
 
 describe('WeightRow swipe action', () => {
+  it('swipe → Edit opens the form directly', async () => {
+    const user = userEvent.setup();
+    await renderWithProviders(<WeightRow row={row(null, 9)} unit="kg" onDelete={jest.fn()} />);
+    await user.press(screen.getByRole('button', { name: 'Edit' }));
+    expect(router.push).toHaveBeenCalledWith({ pathname: '/entry/edit/[id]', params: { id: '9' } });
+  });
+
   it('deletes the entry', async () => {
     const user = userEvent.setup();
     const onDelete = jest.fn();
     await renderWithProviders(<WeightRow row={row(null, 9)} unit="kg" onDelete={onDelete} />);
     await user.press(screen.getByRole('button', { name: 'Delete' }));
     expect(onDelete).toHaveBeenCalledWith(9);
+  });
+
+  it('says when an entry has a photo', async () => {
+    const withPhoto = {
+      ...row(null),
+      entry: makeWeight({ id: 8, weightKg: 78.4, photoUri: 'photos/1.jpg' }),
+    };
+    await renderWithProviders(<WeightRow row={withPhoto} unit="kg" onDelete={jest.fn()} />);
+    expect(screen.getByLabelText(/78\.4 kg, with a photo/)).toBeOnTheScreen();
   });
 });
