@@ -30,3 +30,6 @@ jest.mock(
   'react-native-safe-area-context',
   () => require('react-native-safe-area-context/jest/mock').default,
 );
+
+// The body map's drawing is Skia, which never loads in Jest: draw nothing (BodyMap's labels, the buttons, stay real)
+jest.mock('@/features/measurements/components/body/BodyFigure', () => ({ BodyFigure: () => null }));

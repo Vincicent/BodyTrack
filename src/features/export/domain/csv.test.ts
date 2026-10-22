@@ -54,6 +54,18 @@ describe('parseBackupCsv', () => {
     expect(backup?.measurements).toEqual([]);
   });
 
+  it('imports an old backup\'s "calf" (no side) as both calves, like the database migration', () => {
+    const at = '2026-10-01T08:00:00.000Z';
+    const parsed = parseBackupCsv(
+      [BACKUP_HEADER, `measurement,${at},calf,37,after run`].join('\n'),
+    );
+    expect(parsed?.measurements).toEqual([
+      { measuredAt: new Date(at), site: 'calfL', valueCm: 37, note: 'after run' },
+      { measuredAt: new Date(at), site: 'calfR', valueCm: 37, note: 'after run' },
+    ]);
+    expect(parsed?.skipped).toBe(0);
+  });
+
   it('skips and counts invalid rows, keeps the valid ones', () => {
     const at = day(1).toISOString();
     const backup = parseBackupCsv(

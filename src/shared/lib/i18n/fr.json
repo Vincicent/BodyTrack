@@ -30,7 +30,9 @@
   "measurement": {
     "addTitle": "Ajouter des mensurations",
     "empty": "Aucune mensuration",
-    "sinceStart": "{{value}} depuis le début"
+    "sinceStart": "{{value}} depuis le début",
+    "notMeasured": "pas encore mesuré",
+    "editTitle": "Modifier la mesure"
   },
   "notFound": {
     "title": "Oups",
@@ -63,7 +65,8 @@
     "armR": "Bras (D)",
     "thighL": "Cuisse (G)",
     "thighR": "Cuisse (D)",
-    "calf": "Mollet"
+    "calfL": "Mollet (G)",
+    "calfR": "Mollet (D)"
   },
   "history": {
     "empty": "Aucune entrée pour l'instant",

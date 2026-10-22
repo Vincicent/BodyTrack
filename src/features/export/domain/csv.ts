@@ -64,9 +64,11 @@ const weightRow = z.object({
   weightKg: z.coerce.number().min(20).max(400),
   note,
 });
+// "calf" (no side) is how backups made before left/right calves name it: imported as both, like the database migration
+const LEGACY_CALF = 'calf';
 const measurementRow = z.object({
   measuredAt: date,
-  site: z.enum(MEASUREMENT_SITES),
+  site: z.enum([...MEASUREMENT_SITES, LEGACY_CALF]),
   valueCm: z.coerce.number().min(5).max(300),
   note,
 });
@@ -103,7 +105,12 @@ export function parseBackupCsv(text: string): ParsedBackup | null {
     } else if (type === 'measurement') {
       const parsed = measurementRow.safeParse({ measuredAt, site, valueCm: value, note });
       if (parsed.success) {
-        result.measurements.push(parsed.data);
+        const { site: parsedSite, ...entry } = parsed.data;
+        if (parsedSite === LEGACY_CALF) {
+          result.measurements.push({ ...entry, site: 'calfL' }, { ...entry, site: 'calfR' });
+        } else {
+          result.measurements.push({ ...entry, site: parsedSite });
+        }
         continue;
       }
     }

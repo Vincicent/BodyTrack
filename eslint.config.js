@@ -27,6 +27,12 @@ module.exports = defineConfig([
           message: 'Hermes (iOS/Android) has no toSorted(): use [...array].sort(…).',
         },
         {
+          // same "change array by copy" family as toSorted
+          selector: 'CallExpression[callee.property.name=/^(toReversed|toSpliced)$/]',
+          message:
+            'Hermes (iOS/Android) has no toReversed()/toSpliced(): copy first, e.g. [...array].reverse().',
+        },
+        {
           selector: "CallExpression[callee.object.name='Object'][callee.property.name='groupBy']",
           message: 'Hermes (iOS/Android) has no Object.groupBy(): use reduce().',
         },

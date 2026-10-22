@@ -14,10 +14,14 @@ export function createMeasurementRepository(db: () => AppDatabase) {
         desc(measurementEntries.measuredAt),
       );
     },
+    getById: (id: number) =>
+      db().select().from(measurementEntries).where(eq(measurementEntries.id, id)).get(),
     addMany: (rows: NewMeasurementEntry[]) =>
       db().transaction((tx) =>
         rows.map((row) => tx.insert(measurementEntries).values(row).returning().get()),
       ),
+    update: (id: number, patch: Partial<NewMeasurementEntry>) =>
+      db().update(measurementEntries).set(patch).where(eq(measurementEntries.id, id)).run(),
     remove: (id: number) =>
       db().delete(measurementEntries).where(eq(measurementEntries.id, id)).run(),
     removeAll: () => db().delete(measurementEntries).run(),

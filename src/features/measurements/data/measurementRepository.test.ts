@@ -28,6 +28,24 @@ describe('measurementRepository', () => {
     expect(repo.listQuery().all()).toHaveLength(0);
   });
 
+  it('finds one measurement by id, and nothing for an unknown id', () => {
+    const [waist] = repo.addMany([valid]);
+    expect(repo.getById(waist!.id)).toEqual(
+      expect.objectContaining({ site: 'waist', valueCm: 84 }),
+    );
+    expect(repo.getById(999)).toBeUndefined();
+  });
+
+  it('updates the value and date of one measurement, and only that one', () => {
+    const [waist, hips] = repo.addMany([valid, { ...valid, site: 'hips', valueCm: 98 }]);
+    const later = new Date('2026-10-02T08:00:00Z');
+    repo.update(waist!.id, { valueCm: 82.5, measuredAt: later });
+    expect(repo.getById(waist!.id)).toEqual(
+      expect.objectContaining({ valueCm: 82.5, measuredAt: later, site: 'waist' }),
+    );
+    expect(repo.getById(hips!.id)?.valueCm).toBe(98);
+  });
+
   it('removes one measurement', () => {
     const [waist] = repo.addMany([valid, { ...valid, site: 'hips', valueCm: 98 }]);
     repo.remove(waist!.id);

@@ -1,9 +1,11 @@
+import { router } from 'expo-router';
 import { TrendChart } from '@/shared/ui/charts/TrendChart';
-import { fireEvent, renderWithProviders, screen } from '@/test/render';
+import { fireEvent, renderWithProviders, screen, userEvent } from '@/test/render';
 import type { MeasurementEntry } from '../domain/measurement';
 import { useMeasurements } from '../hooks/useMeasurements';
 import { SiteHistory } from './SiteHistory';
 
+jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 jest.mock('../hooks/useMeasurements');
 jest.mock('@/shared/ui/charts/TrendChart', () => ({ TrendChart: jest.fn(() => null) })); // Skia never loads in Jest
 const chart = jest.mocked(TrendChart);
@@ -29,6 +31,24 @@ describe('SiteHistory', () => {
     expect(screen.getByText('33.1 in')).toBeOnTheScreen();
     expect(screen.getByText('−0.4 in')).toBeOnTheScreen(); // 84 − 85 cm
     expect(screen.getByText('−1.0 in')).toBeOnTheScreen(); // 85 − 87.5 cm
+  });
+});
+
+describe('SiteHistory: correcting a measurement', () => {
+  it('opens a measurement to edit or delete it when tapped', async () => {
+    const user = userEvent.setup();
+    mocked.mockReturnValue({
+      entries: [m(84, 5), m(85, 3)],
+      isLoading: false,
+      error: undefined,
+      refresh: jest.fn(),
+    });
+    await renderWithProviders(<SiteHistory site="waist" unit="cm" />);
+    await user.press(screen.getByRole('button', { name: /84\.0 cm/ }));
+    expect(router.push).toHaveBeenCalledWith({
+      pathname: '/measurement/edit/[id]',
+      params: { id: '5' },
+    });
   });
 });
 

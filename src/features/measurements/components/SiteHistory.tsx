@@ -3,12 +3,16 @@ import type { LengthUnit } from '@/shared/lib/units';
 import { useTheme } from '@/shared/theme/useTheme';
 import { AppText, EmptyState, ErrorScreen, LoadingState, Screen } from '@/shared/ui';
 import { TrendChart } from '@/shared/ui/charts/TrendChart';
+import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { formatLength, formatLengthChange, siteChartPoints } from '../domain/siteSummary';
 import { useMeasurements } from '../hooks/useMeasurements';
 
-/** A chart of one site, then every measurement, newest first, with the change from the previous one. */
+/**
+ * A chart of one site, then every measurement, newest first, with the change from the previous one. Tap a measurement
+ * to correct or delete it.
+ */
 export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: LengthUnit }) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
@@ -40,9 +44,18 @@ export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: Lengt
           unit,
           i18n.language,
         );
+        const value = formatLength(entry.valueCm, unit, i18n.language);
         return (
-          <View
+          <Pressable
             key={entry.id}
+            accessibilityRole="button"
+            accessibilityLabel={[date.format(entry.measuredAt), value, change, entry.note]
+              .filter(Boolean)
+              .join(', ')}
+            accessibilityHint={t('measurement.editTitle')}
+            onPress={() =>
+              router.push({ pathname: '/measurement/edit/[id]', params: { id: String(entry.id) } })
+            }
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -56,10 +69,10 @@ export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: Lengt
               {entry.note ? <AppText variant="caption">{entry.note}</AppText> : null}
             </View>
             <View style={{ alignItems: 'flex-end' }}>
-              <AppText>{formatLength(entry.valueCm, unit, i18n.language)}</AppText>
+              <AppText>{value}</AppText>
               {change ? <AppText variant="caption">{change}</AppText> : null}
             </View>
-          </View>
+          </Pressable>
         );
       })}
     </Screen>

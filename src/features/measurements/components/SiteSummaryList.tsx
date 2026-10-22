@@ -6,8 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, View } from 'react-native';
 import { formatLength, formatLengthChange, summarizeSites } from '../domain/siteSummary';
 import { useMeasurements } from '../hooks/useMeasurements';
+import { BodyMap } from './body/BodyMap';
 
-/** The Measurements tab: one row per measured site, with its latest value and the change since the start. */
+/**
+ * The Measurements tab: the body map (every site on a silhouette), then one row per measured site, with its latest
+ * value and the change since the start. The list stays: quicker to scan, and what screen reader users prefer.
+ */
 export function SiteSummaryList({ unit }: { unit: LengthUnit }) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
@@ -26,6 +30,7 @@ export function SiteSummaryList({ unit }: { unit: LengthUnit }) {
   const day = new Intl.DateTimeFormat(i18n.language, { day: 'numeric', month: 'short' });
   return (
     <Screen>
+      <BodyMap summaries={sites} unit={unit} />
       {sites.map(({ site, latest, changeCm }) => {
         const name = t(`sites.${site}`);
         const value = formatLength(latest.valueCm, unit, i18n.language);

@@ -30,7 +30,9 @@
   "measurement": {
     "addTitle": "Add measurements",
     "empty": "No measurements yet",
-    "sinceStart": "{{value}} since start"
+    "sinceStart": "{{value}} since start",
+    "notMeasured": "not measured yet",
+    "editTitle": "Edit measurement"
   },
   "notFound": {
     "title": "Oops",
@@ -63,7 +65,8 @@
     "armR": "Arm (R)",
     "thighL": "Thigh (L)",
     "thighR": "Thigh (R)",
-    "calf": "Calf"
+    "calfL": "Calf (L)",
+    "calfR": "Calf (R)"
   },
   "history": {
     "empty": "No entries yet",

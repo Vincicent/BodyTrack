@@ -33,5 +33,9 @@ appId: com.vincicent.bodytrack
     file: subflows/tap-below-keyboard.yaml
     env:
       BUTTON: 'Save'
-- assertVisible: 'Waist, 82.0 cm. '
-- assertVisible: 'Neck, 38.0 cm. '
+# The rows sit under the body map: on a small screen they're below the fold, so scroll to them like a user
+# (the map's own labels read "Waist, 82.0 cm", without the list's ". ": no mix-up)
+- scrollUntilVisible:
+    element: 'Neck, 38.0 cm. '
+- scrollUntilVisible:
+    element: 'Waist, 82.0 cm. '
