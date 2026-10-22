@@ -53,6 +53,21 @@ async function search(barcode: string) {
 }
 
 describe('FoodLookup', () => {
+  it('credits Open Food Facts on the lookup screen, and links the product page once found', async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({
+        code: '3017624010701',
+        status: 1,
+        product: { product_name: 'Nutella', nutriments: {} },
+      }),
+    );
+    await renderWithProviders(<FoodLookup />);
+    expect(screen.getByText('Open Food Facts')).toBeOnTheScreen(); // before any lookup
+    await search('3017624010701');
+    await screen.findByText('Nutella');
+    expect(screen.getByText('Open Food Facts')).toBeOnTheScreen();
+  });
+
   it('shows the product', async () => {
     fetchMock.mockResolvedValue(
       jsonResponse({

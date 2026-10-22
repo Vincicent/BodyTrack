@@ -122,6 +122,10 @@
     "crashReports": "Envoyer des rapports de plantage anonymes",
     "crashReportsHelp": "Si l'application plante, un rapport technique aide à corriger le bug : l'erreur, la version de l'app et le modèle du téléphone. Il ne contient jamais vos poids, vos mensurations ni aucune information personnelle. Vous pouvez le désactiver à tout moment."
   },
+  "about": {
+    "title": "À propos",
+    "version": "BodyTrack {{version}}"
+  },
   "export": {
     "csv": "Exporter en CSV",
     "imported": "{{count}} importées, {{skipped}} ignorées",
@@ -190,6 +194,7 @@
       "highProtein": "Riche en protéines"
     },
     "energy": "{{kj}} kJ / {{kcal}}",
-    "ofFibreIntake": "{{value}} % des 25 g conseillés par jour (EFSA)"
+    "ofFibreIntake": "{{value}} % des 25 g conseillés par jour (EFSA)",
+    "credit": "Données alimentaires <off>Open Food Facts</off>, disponibles sous licence <odbl>Open Database License</odbl> (ODbL)."
   }
 }

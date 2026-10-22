@@ -122,6 +122,10 @@
     "crashReports": "Send anonymous crash reports",
     "crashReportsHelp": "If the app crashes, a technical report helps fix the bug: the error, the app version and the phone model. It never includes your weights, measurements or any personal information. You can turn this off at any time."
   },
+  "about": {
+    "title": "About",
+    "version": "BodyTrack {{version}}"
+  },
   "export": {
     "csv": "Export CSV",
     "imported": "{{count}} imported, {{skipped}} skipped",
@@ -190,6 +194,7 @@
       "highProtein": "High protein"
     },
     "energy": "{{kj}} kJ / {{kcal}}",
-    "ofFibreIntake": "{{value}}% of the 25 g a day advised (EFSA)"
+    "ofFibreIntake": "{{value}}% of the 25 g a day advised (EFSA)",
+    "credit": "Food data from <off>Open Food Facts</off>, available under the <odbl>Open Database License</odbl> (ODbL)."
   }
 }

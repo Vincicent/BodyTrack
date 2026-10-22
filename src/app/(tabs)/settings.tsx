@@ -1,3 +1,4 @@
+import { AboutSection } from '@/features/settings/components/AboutSection';
 import { DataSection } from '@/features/settings/components/DataSection';
 import { PrivacySection } from '@/features/settings/components/PrivacySection';
 import { ReminderSection } from '@/features/settings/components/ReminderSection';
@@ -11,6 +12,7 @@ export default function SettingsScreen() {
       <ReminderSection />
       <DataSection />
       <PrivacySection />
+      <AboutSection />
     </Screen>
   );
 }
