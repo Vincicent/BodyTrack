@@ -9,6 +9,7 @@ import { isValidBarcode } from '../domain/product';
 import { BarcodeScanner, CAN_SCAN } from './BarcodeScanner';
 import { NutritionPanel } from './NutritionPanel';
 import { NutriScoreBadge } from './NutriScoreBadge';
+import { OpenFoodFactsCredit } from './OpenFoodFactsCredit';
 
 export function FoodLookup() {
   const theme = useTheme();
@@ -77,6 +78,9 @@ export function FoodLookup() {
           <NutritionPanel product={data} />
         </Card>
       ) : null}
+
+      {/* Always on screen (lookup and product), as Open Food Facts asks; the product's own page when there is one */}
+      <OpenFoodFactsCredit barcode={current && data ? data.barcode : undefined} />
     </View>
   );
 }
