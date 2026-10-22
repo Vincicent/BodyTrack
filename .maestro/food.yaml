@@ -16,6 +16,10 @@ appId: com.vincicent.bodytrack
 - assertVisible:
     text: 'Look up'
     enabled: true
+# Close the keyboard first: on a small screen its toolbar (Prev / Next / Done) covers the field, so a tap on the ✕
+# landed on the toolbar. "Done" rather than hideKeyboard, which presses Back on Android.
+- tapOn:
+    id: 'keyboard.toolbar.done'
 - tapOn: 'Clear' # the ✕ inside the field
 - assertNotVisible: '12345678'
 - assertNotVisible: 'Clear' # empty field: no ✕
