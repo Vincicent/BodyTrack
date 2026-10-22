@@ -14,16 +14,24 @@ appId: com.vincicent.bodytrack
     id: 'measurement-neck'
 - inputText: '38'
 - waitForAnimationToEnd
+# Waist is 2 fields below: go there with the toolbar's ↓, like a user (on a small screen the keyboard covers it).
+# Optional, then tap Waist: without an on-screen keyboard there's no toolbar, but nothing covers Waist either.
+- tapOn:
+    id: 'keyboard.toolbar.next'
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    id: 'keyboard.toolbar.next'
+    optional: true
+- waitForAnimationToEnd
 - tapOn:
     id: 'measurement-waist'
 - inputText: '82'
 - waitForAnimationToEnd
-# Close the keyboard with the toolbar's "Done" (Screen's KeyboardToolbar). Not hideKeyboard: on Android it presses Back
-# (closes the form) and it can't close the iOS number pad, whose Save would stay under the keyboard.
-- tapOn:
-    id: 'keyboard.toolbar.done'
-- scrollUntilVisible: # 9 sites: Save is below the screen, like for a user
-    element: 'Save'
-- tapOn: 'Save'
+# 9 sites: Save is below the screen, like for a user
+- runFlow:
+    file: subflows/tap-below-keyboard.yaml
+    env:
+      BUTTON: 'Save'
 - assertVisible: 'Waist, 82.0 cm. '
 - assertVisible: 'Neck, 38.0 cm. '

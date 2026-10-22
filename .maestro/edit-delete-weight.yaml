@@ -21,12 +21,18 @@ appId: com.vincicent.bodytrack
       - assertVisible:
           id: 'weight-input'
           text: '79'
-- tapOn: 'Save changes'
+- runFlow:
+    file: subflows/tap-below-keyboard.yaml
+    env:
+      BUTTON: 'Save changes'
 - extendedWaitUntil: # slow CI simulators: give the list time to update
     visible: '.*79.0 kg.*'
     timeout: 15000
 - tapOn: '.*79.0 kg.*'
-- tapOn: 'Delete entry'
+- runFlow:
+    file: subflows/tap-below-keyboard.yaml
+    env:
+      BUTTON: 'Delete entry'
 - assertVisible: 'Delete this entry?'
 - tapOn: '(?i)delete' # the dialog's button (Android shows it in capitals)
 - assertVisible: 'No entries yet'

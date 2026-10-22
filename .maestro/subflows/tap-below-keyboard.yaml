@@ -1,0 +1,13 @@
+# Taps a form's button (Save, Delete entry) like a user on a small phone: the keyboard covers the bottom of the screen
+# (GitHub's Android emulator: 320×640), so close it with the toolbar's "Done", then scroll to the button. Usage:
+#   - runFlow: { file: subflows/tap-below-keyboard.yaml, env: { BUTTON: "Save" } }
+# Not hideKeyboard: on Android it presses Back (closes the form) and it can't close the iOS number pad.
+appId: com.vincicent.bodytrack
+---
+- tapOn:
+    id: 'keyboard.toolbar.done'
+    optional: true # no on-screen keyboard (a fresh iOS simulator can start with it hidden): nothing to close
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: ${BUTTON}
+- tapOn: ${BUTTON}
