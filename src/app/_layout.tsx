@@ -1,7 +1,8 @@
-import { selectLanguage, selectTheme } from '@/features/settings';
+import { selectCrashReports, selectLanguage, selectTheme } from '@/features/settings';
 import { configureNotifications } from '@/features/settings/reminders';
 import { useNotificationRouting } from '@/features/settings/useNotificationRouting';
 import { DatabaseProvider } from '@/shared/db/DatabaseProvider';
+import { setCrashReporting } from '@/shared/lib/crashReporting';
 import { deviceLanguage, i18n } from '@/shared/lib/i18n'; // importing it initialises translations
 import { ThemePreferenceProvider } from '@/shared/theme/ThemePreference';
 import { useColorSchemeName } from '@/shared/theme/useTheme';
@@ -27,6 +28,9 @@ import { PersistGate } from 'redux-persist/integration/react';
 function PreferencesBridge({ children }: { children: ReactNode }) {
   const theme = useAppSelector(selectTheme);
   const language = useAppSelector(selectLanguage);
+  const crashReports = useAppSelector(selectCrashReports);
+  // After rehydration, so a user who opted out never has Sentry started, even briefly
+  useEffect(() => setCrashReporting(crashReports), [crashReports]);
   useEffect(() => {
     void i18n.changeLanguage(language === 'system' ? deviceLanguage() : language);
   }, [language]);

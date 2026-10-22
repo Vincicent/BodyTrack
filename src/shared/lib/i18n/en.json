@@ -110,6 +110,11 @@
     "denied": "Notifications are off for BodyTrack.",
     "openSettings": "Open settings"
   },
+  "privacy": {
+    "title": "Privacy",
+    "crashReports": "Send anonymous crash reports",
+    "crashReportsHelp": "If the app crashes, a technical report helps fix the bug: the error, the app version and the phone model. It never includes your weights, measurements or any personal information. You can turn this off at any time."
+  },
   "export": {
     "csv": "Export CSV",
     "imported": "{{count}} imported, {{skipped}} skipped",

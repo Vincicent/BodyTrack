@@ -33,3 +33,10 @@ jest.mock(
 
 // The body map's drawing is Skia, which never loads in Jest: draw nothing (BodyMap's labels, the buttons, stay real)
 jest.mock('@/features/measurements/components/body/BodyFigure', () => ({ BodyFigure: () => null }));
+
+// Sentry's native SDK isn't in Jest; the app's crash reporting is tested against these mocks
+jest.mock('@sentry/react-native', () => ({
+  init: jest.fn(),
+  close: jest.fn(() => Promise.resolve()),
+  captureException: jest.fn(),
+}));

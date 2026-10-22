@@ -12,6 +12,8 @@ jobs:
   maestro:
     runs-on: macos-26
     timeout-minutes: 75
+    env:
+      SENTRY_DISABLE_AUTO_UPLOAD: true # test build: no Sentry token here, don't upload source maps
     steps:
       - uses: actions/checkout@v4
       - uses: maxim-lobanov/setup-xcode@v1
