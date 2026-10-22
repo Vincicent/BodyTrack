@@ -13,6 +13,8 @@ export type SettingsState = {
   theme: ThemePref;
   language: Language;
   reminder: Reminder;
+  /** Anonymous crash reports: on by default (opt-out). Missing in settings persisted before it existed → on. */
+  crashReports?: boolean;
 };
 
 const initialState: SettingsState = {
@@ -23,6 +25,7 @@ const initialState: SettingsState = {
   theme: 'system',
   language: 'system',
   reminder: { enabled: false, hour: 8, minute: 0 },
+  crashReports: true,
 };
 
 export const settingsSlice = createSlice({
@@ -50,6 +53,9 @@ export const settingsSlice = createSlice({
     updateReminder(state, action: PayloadAction<Partial<Reminder>>) {
       Object.assign(state.reminder, action.payload);
     },
+    setCrashReports(state, action: PayloadAction<boolean>) {
+      state.crashReports = action.payload;
+    },
     resetSettings: () => initialState,
   },
   selectors: {
@@ -60,6 +66,7 @@ export const settingsSlice = createSlice({
     selectTheme: (s) => s.theme,
     selectLanguage: (s) => s.language,
     selectReminder: (s) => s.reminder,
+    selectCrashReports: (s) => s.crashReports !== false,
   },
 });
 
@@ -71,6 +78,7 @@ export const {
   setTheme,
   setLanguage,
   updateReminder,
+  setCrashReports,
   resetSettings,
 } = settingsSlice.actions;
 export const {
@@ -81,4 +89,5 @@ export const {
   selectTheme,
   selectLanguage,
   selectReminder,
+  selectCrashReports,
 } = settingsSlice.selectors;

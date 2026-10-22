@@ -1,4 +1,6 @@
+import { reportError } from '@/shared/lib/crashReporting';
 import { useTheme } from '@/shared/theme/useTheme';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { AppText } from './AppText';
@@ -10,6 +12,7 @@ type Props = { error: Error; retry: () => void | Promise<void> };
 export function ErrorScreen({ error, retry }: Props) {
   const theme = useTheme();
   const { t } = useTranslation();
+  useEffect(() => reportError(error), [error]); // the app caught it, but it is still a bug worth knowing about
   return (
     <View
       style={{

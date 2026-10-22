@@ -6,21 +6,41 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
+      }
     },
     "preview": {
       "distribution": "internal",
       "channel": "preview",
-      "env": { "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a" }
+      "env": {
+        "ORG_GRADLE_PROJECT_reactNativeArchitectures": "arm64-v8a",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://1b1cf0403860423a9b2892b1163e0011@o4512301036273664.ingest.de.sentry.io/4512301083525200",
+        "EXPO_PUBLIC_SENTRY_ENV": "preview"
+      }
     },
     "production": {
       "autoIncrement": true,
-      "channel": "production"
+      "channel": "production",
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "false",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://1b1cf0403860423a9b2892b1163e0011@o4512301036273664.ingest.de.sentry.io/4512301083525200",
+        "EXPO_PUBLIC_SENTRY_ENV": "production"
+      }
     },
     "e2e-test": {
       "withoutCredentials": true,
-      "ios": { "simulator": true },
-      "android": { "buildType": "apk" }
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
+      }
     }
   },
   "submit": {

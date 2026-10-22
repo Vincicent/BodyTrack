@@ -1,6 +1,7 @@
-const { getDefaultConfig } = require('expo/metro-config');
+// Expo's default config + a debug ID in each bundle, so Sentry matches crash reports to their source maps
+const { getSentryExpoConfig } = require('@sentry/react-native/metro');
 
-const config = getDefaultConfig(__dirname);
+const config = getSentryExpoConfig(__dirname);
 
 config.resolver.sourceExts.push('sql'); // Drizzle migrations
 config.resolver.assetExts.push('wasm'); // expo-sqlite on web

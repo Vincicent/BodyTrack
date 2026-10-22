@@ -1,5 +1,12 @@
 import { selectBmi } from './selectors';
-import { resetSettings, setWeightUnit, settingsSlice, updateReminder } from './settingsSlice';
+import {
+  resetSettings,
+  selectCrashReports,
+  setCrashReports,
+  setWeightUnit,
+  settingsSlice,
+  updateReminder,
+} from './settingsSlice';
 
 const reducer = settingsSlice.reducer;
 const initial = settingsSlice.getInitialState();
@@ -21,6 +28,16 @@ describe('settingsSlice', () => {
       updateReminder({ enabled: true }),
     );
     expect(reducer(changed, resetSettings())).toEqual(initial);
+  });
+});
+
+describe('crash reports (opt-out)', () => {
+  const read = (settings: typeof initial) => selectCrashReports({ settings });
+  it('are on by default', () => expect(read(initial)).toBe(true));
+  it('can be turned off', () => expect(read(reducer(initial, setCrashReports(false)))).toBe(false));
+  it('are on for settings saved before the option existed', () => {
+    const { crashReports: _, ...older } = initial;
+    expect(read(older)).toBe(true);
   });
 });
 
