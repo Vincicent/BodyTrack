@@ -2,6 +2,11 @@ import { renderWithProviders, screen, userEvent } from '@/test/render';
 import { FoodLookup } from './FoodLookup';
 
 // A phone set to France, where Nutri-Score is used (NutriScoreBadge.test covers the other countries)
+// The app's version comes from app.json in a real build; Jest has no app config, so give it one
+jest.mock('expo-constants', () => ({
+  __esModule: true,
+  default: { expoConfig: { version: '1.0.0' } },
+}));
 jest.mock('expo-localization', () => ({
   ...jest.requireActual('expo-localization'),
   useLocales: jest.fn(() => [{ regionCode: 'FR' }]),
@@ -64,6 +69,15 @@ describe('FoodLookup', () => {
     await search('3017624010701');
     expect(await screen.findByText('Nutella')).toBeOnTheScreen();
     expect(screen.getByText('2,255 kJ / 539 kcal')).toBeOnTheScreen(); // kJ computed: the response has kcal only
+  });
+
+  it('identifies the app to Open Food Facts: name, version and a contact', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ code: '3017624010701', status: 0 }));
+    await renderWithProviders(<FoodLookup />);
+    await search('3017624010701');
+    await screen.findByText(/No product found/);
+    const request = fetchMock.mock.calls[0][0] as Request;
+    expect(request.headers.get('X-User-Agent')).toBe('BodyTrack/1.0.0 (vincicent.dev@gmail.com)');
   });
 
   it('rates a drink per 100 ml, with the portion rule (a 330 ml can of cola is high in sugars)', async () => {
