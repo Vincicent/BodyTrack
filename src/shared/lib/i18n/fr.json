@@ -4,12 +4,14 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "add": "Ajouter",
+    "clear": "Effacer",
     "done": "OK"
   },
   "tabs": {
     "dashboard": "Tableau de bord",
     "history": "Historique",
     "measurements": "Mensurations",
+    "food": "Aliments",
     "settings": "Réglages"
   },
   "dashboard": {
@@ -120,5 +122,56 @@
   "error": {
     "title": "Une erreur est survenue",
     "retry": "Réessayer"
+  },
+  "food": {
+    "title": "Recherche d'aliment",
+    "barcode": "Code-barres",
+    "search": "Rechercher",
+    "notFound": "Aucun produit pour ce code-barres.",
+    "error": "Impossible de joindre la base d'aliments. Vérifiez votre connexion.",
+    "retry": "Réessayer",
+    "per100g": "Pour 100 g",
+    "kcal": "{{value}} kcal",
+    "unknownBrand": "Marque inconnue",
+    "per100ml": "Pour 100 ml",
+    "grams": "{{value}} g",
+    "nutriScore": "Nutri-Score {{grade}}",
+    "nutrients": {
+      "energy": "Énergie",
+      "fat": "Matières grasses",
+      "saturatedFat": "dont acides gras saturés",
+      "monounsaturatedFat": "dont acides gras mono-insaturés",
+      "polyunsaturatedFat": "dont acides gras polyinsaturés",
+      "carbohydrate": "Glucides",
+      "sugars": "dont sucres",
+      "fibre": "Fibres alimentaires",
+      "protein": "Protéines",
+      "salt": "Sel"
+    },
+    "levels": {
+      "low": "Faible",
+      "medium": "Moyen",
+      "high": "Élevé",
+      "unknown": "Inconnu"
+    },
+    "ofReference": "{{value}} % de l'apport de référence journalier",
+    "whoAdvice": "Conseils de l'OMS pour les adultes : moins de 5 g de sel par jour, sucres libres sous 10 % de l'énergie, graisses saturées 10 % ou moins.",
+    "disclaimer": "Niveaux : critères britanniques d'étiquetage nutritionnel (pour 100 g, ou par portion si elle est grande). Allégations : règles européennes (règlement 1924/2006). Information générale, pas un avis médical.",
+    "scan": "Scanner un code-barres",
+    "scanHint": "Visez le code-barres avec l'appareil photo.",
+    "closeScanner": "Fermer l'appareil photo",
+    "cameraDenied": "L'accès à l'appareil photo est désactivé pour BodyTrack.",
+    "openSettings": "Ouvrir les réglages",
+    "claims": {
+      "lowEnergy": "Faible valeur énergétique",
+      "highMonounsaturatedFat": "Riche en graisses mono-insaturées",
+      "highPolyunsaturatedFat": "Riche en graisses polyinsaturées",
+      "sourceOfFibre": "Source de fibres",
+      "highFibre": "Riche en fibres",
+      "sourceOfProtein": "Source de protéines",
+      "highProtein": "Riche en protéines"
+    },
+    "energy": "{{kj}} kJ / {{kcal}}",
+    "ofFibreIntake": "{{value}} % des 25 g conseillés par jour (EFSA)"
   }
 }

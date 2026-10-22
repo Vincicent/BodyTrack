@@ -1,3 +1,4 @@
+import { foodApi } from '@/features/food/api/foodApi';
 import { settingsSlice } from '@/features/settings';
 import { configureStore } from '@reduxjs/toolkit';
 import Storage from 'expo-sqlite/kv-store';
@@ -24,7 +25,7 @@ export const store = configureStore({
     getDefault({
       // redux-persist dispatches non-serialisable actions; tell RTK they're fine
       serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] },
-    }),
+    }).concat(foodApi.middleware),
 });
 export const persistor = persistStore(store);
 

@@ -1,6 +1,7 @@
 {
   "ios": {
     "CFBundleDisplayName": "BodyTrack",
-    "NSPhotoLibraryUsageDescription": "BodyTrack uses your photos to attach progress pictures to your entries."
+    "NSPhotoLibraryUsageDescription": "BodyTrack uses your photos to attach progress pictures to your entries.",
+    "NSCameraUsageDescription": "BodyTrack uses the camera to scan the barcode of food products."
   }
 }
