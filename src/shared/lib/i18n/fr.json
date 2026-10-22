@@ -124,7 +124,8 @@
   },
   "about": {
     "title": "À propos",
-    "version": "BodyTrack {{version}}"
+    "version": "BodyTrack {{version}}",
+    "privacyPolicy": "Politique de confidentialité"
   },
   "export": {
     "csv": "Exporter en CSV",
