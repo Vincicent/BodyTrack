@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const weightEntrySchema = z.object({
   id: z.number().int(),
   measuredAt: z.date(),
-  weightKg: z.number().min(20).max(400),
+  weightKg: z.number().positive().max(400), // any positive weight: a baby can be tracked too
   note: z.string().max(280).nullable(),
   photoUri: z.string().nullable(),
 });

@@ -35,7 +35,10 @@ describe('formatDelta', () => {
   it.each([
     [0.4, 'kg', 'en', '+0.4'],
     [-0.3, 'kg', 'en', '−0.3'],
-    [0.04, 'kg', 'en', '±0.0'],
+    [0.04, 'kg', 'en', '+0.04'], // a baby's gain: to 10 g in kg
+    [0.004, 'kg', 'en', '±0.0'],
+    [0.05, 'lb', 'en', '+0.1'], // lb stays to 0.1 (0.11 lb)
+    [3.25 - 3.2, 'kg', 'en', '+0.05'], // floating point: 0.04999… is 0.05
     [-0.3, 'kg', 'fr', '−0,3'],
     [1, 'lb', 'en', '+2.2'],
   ] as const)('formatDelta(%p, %p, %p) = %p', (delta, unit, locale, expected) => {

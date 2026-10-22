@@ -1,4 +1,4 @@
-import { kgTo, round, type WeightUnit } from '@/shared/lib/units';
+import { kgTo, round, WEIGHT_DECIMALS, type WeightUnit } from '@/shared/lib/units';
 import type { WeightEntry } from './weight';
 
 export type HistoryRow =
@@ -38,10 +38,11 @@ export function formatDelta(
   locale: string,
 ): string | null {
   if (deltaKg === null) return null;
-  const value = round(kgTo(unit, deltaKg), 1);
+  const decimals = WEIGHT_DECIMALS[unit]; // like the weights: a baby's +0.03 kg is not "±0.0"
+  const value = round(kgTo(unit, deltaKg), decimals);
   const abs = new Intl.NumberFormat(locale, {
     minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
+    maximumFractionDigits: decimals,
   }).format(Math.abs(value));
   if (value === 0) return `±${abs}`;
   return `${value > 0 ? '+' : MINUS}${abs}`;
