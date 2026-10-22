@@ -50,9 +50,16 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
-          # Each line runs as its own command
+          # Each line runs as its own command. Warm-up first: right after boot, the first flow failed in 4 s with "device
+          # offline" (adb briefly lost the emulator; the next 5 passed). Launch the app once (-W waits until it's drawn), let
+          # Maestro install its driver on the device, and make sure adb sees the device before the flows.
           script: |
             adb install android/app/build/outputs/apk/release/app-release.apk
+            adb shell am start -W -n com.vincicent.bodytrack/.MainActivity
+            sleep 10
+            adb shell am force-stop com.vincicent.bodytrack
+            maestro hierarchy > /dev/null
+            adb wait-for-device
             maestro test .maestro/ --format junit --output maestro-report.xml
 
       # Maestro keeps them in ~/.maestro, a hidden folder (invisible in Finder once unzipped): copy them somewhere visible
