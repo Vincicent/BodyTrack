@@ -1,4 +1,4 @@
-# A wrong entry can be corrected, then deleted.
+# A wrong entry can be opened, corrected (Edit), then deleted from its details.
 appId: com.vincicent.bodytrack
 ---
 - launchApp:
@@ -8,7 +8,9 @@ appId: com.vincicent.bodytrack
     env:
       WEIGHT: '80'
 - tapOn: 'Weight(, tab.*)?' # the tab: "Weight", which iOS reads as "Weight, tab, 2 of 5" (not "Current weight")
-- tapOn: '.*80.0 kg.*' # the row
+- tapOn: '.*80.0 kg.*' # the row → its details
+- assertVisible: 'Weight entry'
+- tapOn: 'Edit' # the header button
 - assertVisible: 'Edit weight'
 # On a slow CI simulator, typing can drop a character (GitHub saved "7" instead of "79"): retype until the field holds 79
 - retry:
@@ -25,14 +27,10 @@ appId: com.vincicent.bodytrack
     file: subflows/tap-below-keyboard.yaml
     env:
       BUTTON: 'Save changes'
-- extendedWaitUntil: # slow CI simulators: give the list time to update
-    visible: '.*79.0 kg.*'
+- extendedWaitUntil: # back on the details, updated (slow CI simulators: give it time)
+    visible: '79.0 kg'
     timeout: 15000
-- tapOn: '.*79.0 kg.*'
-- runFlow:
-    file: subflows/tap-below-keyboard.yaml
-    env:
-      BUTTON: 'Delete entry'
+- tapOn: 'Delete entry'
 - assertVisible: 'Delete this entry?'
 - tapOn: '(?i)delete' # the dialog's button (Android shows it in capitals)
 - assertVisible: 'No entries yet'

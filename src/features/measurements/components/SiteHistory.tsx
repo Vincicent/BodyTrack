@@ -1,17 +1,18 @@
 import type { MeasurementSite } from '@/shared/lib/measurementSites';
 import type { LengthUnit } from '@/shared/lib/units';
 import { useTheme } from '@/shared/theme/useTheme';
-import { AppText, EmptyState, ErrorScreen, LoadingState, Screen } from '@/shared/ui';
+import { AppText, EmptyState, ErrorScreen, LoadingState, Screen, SwipeableRow } from '@/shared/ui';
 import { TrendChart } from '@/shared/ui/charts/TrendChart';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
+import { measurementRepository } from '../data/measurementRepository';
 import { formatLength, formatLengthChange, siteChartPoints } from '../domain/siteSummary';
 import { useMeasurements } from '../hooks/useMeasurements';
 
 /**
  * A chart of one site, then every measurement, newest first, with the change from the previous one. Tap a measurement
- * to correct or delete it.
+ * for its details; swipe it (or long press) to edit or delete it.
  */
 export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: LengthUnit }) {
   const theme = useTheme();
@@ -46,20 +47,35 @@ export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: Lengt
         );
         const value = formatLength(entry.valueCm, unit, i18n.language);
         return (
-          <Pressable
+          <SwipeableRow
             key={entry.id}
-            accessibilityRole="button"
             accessibilityLabel={[date.format(entry.measuredAt), value, change, entry.note]
               .filter(Boolean)
               .join(', ')}
-            accessibilityHint={t('measurement.editTitle')}
             onPress={() =>
-              router.push({ pathname: '/measurement/edit/[id]', params: { id: String(entry.id) } })
+              router.push({ pathname: '/measurement/entry/[id]', params: { id: String(entry.id) } })
             }
+            actions={[
+              {
+                label: t('common.edit'),
+                tone: 'primary',
+                onPress: () =>
+                  router.push({
+                    pathname: '/measurement/edit/[id]',
+                    params: { id: String(entry.id) },
+                  }),
+              },
+              {
+                label: t('common.delete'),
+                tone: 'danger',
+                onPress: () => measurementRepository.remove(entry.id),
+              },
+            ]}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               paddingVertical: theme.spacing.md,
+              backgroundColor: theme.colors.background, // opaque: covers the actions until swiped
               borderBottomWidth: 1,
               borderBottomColor: theme.colors.border,
             }}
@@ -72,7 +88,7 @@ export function SiteHistory({ site, unit }: { site: MeasurementSite; unit: Lengt
               <AppText>{value}</AppText>
               {change ? <AppText variant="caption">{change}</AppText> : null}
             </View>
-          </Pressable>
+          </SwipeableRow>
         );
       })}
     </Screen>

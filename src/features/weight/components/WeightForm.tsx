@@ -12,6 +12,7 @@ import {
   type WeightFormInput,
   type WeightFormOutput,
 } from '../domain/weightForm';
+import { PhotoField } from './PhotoField';
 
 type Props = {
   unit: WeightUnit;
@@ -29,7 +30,7 @@ export function WeightForm({ unit, defaultValues, submitLabel, onSubmit }: Props
     formState: { errors, isSubmitting },
   } = useForm<WeightFormInput, unknown, WeightFormOutput>({
     resolver: zodResolver(weightFormSchema),
-    defaultValues: { weight: '', measuredAt: new Date(), note: '', ...defaultValues },
+    defaultValues: { weight: '', measuredAt: new Date(), note: '', photo: null, ...defaultValues },
   });
   const tr = (key?: string) => (key ? t(key) : undefined);
 
@@ -77,6 +78,11 @@ export function WeightForm({ unit, defaultValues, submitLabel, onSubmit }: Props
             error={tr(errors.note?.message)}
           />
         )}
+      />
+      <Controller
+        control={control}
+        name="photo"
+        render={({ field }) => <PhotoField value={field.value ?? null} onChange={field.onChange} />}
       />
       <Button
         title={submitLabel ?? t('common.save')}

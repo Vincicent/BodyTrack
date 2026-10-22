@@ -3,7 +3,7 @@ import { EmptyState, ErrorScreen, LoadingState } from '@/shared/ui';
 import { useAppSelector } from '@/store/hooks';
 import { FlashList } from '@shopify/flash-list';
 import { useTranslation } from 'react-i18next';
-import { weightRepository } from '../data/weightRepository';
+import { deleteWeightEntry } from '../data/deleteWeightEntry';
 import { toHistoryRows } from '../domain/history';
 import { useWeightEntries } from '../hooks/useWeightEntries';
 import { MonthHeader } from './MonthHeader';
@@ -34,7 +34,7 @@ export function HistoryList() {
         item.type === 'header' ? (
           <MonthHeader label={item.label} />
         ) : (
-          <WeightRow row={item} unit={unit} onDelete={(id) => weightRepository.remove(id)} />
+          <WeightRow row={item} unit={unit} onDelete={(id) => deleteWeightEntry(id)} />
         )
       }
       contentInsetAdjustmentBehavior="automatic"

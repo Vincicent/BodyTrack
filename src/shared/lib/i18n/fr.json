@@ -5,7 +5,8 @@
     "delete": "Supprimer",
     "add": "Ajouter",
     "clear": "Effacer",
-    "done": "OK"
+    "done": "OK",
+    "edit": "Modifier"
   },
   "tabs": {
     "dashboard": "Tableau de bord",
@@ -28,7 +29,8 @@
   "entry": {
     "addTitle": "Ajouter un poids",
     "editTitle": "Modifier le poids",
-    "editHeading": "Modifier l'entrée n°{{id}}"
+    "editHeading": "Modifier l'entrée n°{{id}}",
+    "detailsTitle": "Pesée"
   },
   "measurement": {
     "addTitle": "Ajouter des mensurations",
@@ -50,6 +52,11 @@
     "deleteEntry": "Supprimer l'entrée",
     "deleteConfirmTitle": "Supprimer cette entrée ?",
     "deleteConfirmMessage": "Cette action est irréversible."
+  },
+  "details": {
+    "sincePrevious": "{{value}} depuis la précédente",
+    "first": "Première entrée",
+    "note": "Note"
   },
   "errors": {
     "required": "Obligatoire",
@@ -119,11 +126,16 @@
     "csv": "Exporter en CSV",
     "imported": "{{count}} importées, {{skipped}} ignorées",
     "import": "Importer un CSV",
-    "backupHint": "Vos données restent sur cet appareil. Exportez-les régulièrement comme sauvegarde.",
+    "backupHint": "Vos données restent sur cet appareil. Exportez-les régulièrement en sauvegarde (les photos restent sur l'appareil et ne sont pas dans le CSV).",
     "notBodyTrack": "Ce fichier n'est pas un export BodyTrack."
   },
   "photo": {
-    "add": "Ajouter une photo"
+    "add": "Ajouter une photo",
+    "change": "Changer la photo",
+    "remove": "Retirer la photo",
+    "label": "Photo de progression",
+    "withPhoto": "avec une photo",
+    "error": "Impossible d'ouvrir cette photo. Essayez-en une autre."
   },
   "error": {
     "title": "Une erreur est survenue",

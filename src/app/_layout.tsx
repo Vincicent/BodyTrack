@@ -52,7 +52,8 @@ function Navigation() {
           name="entry/new"
           options={{ presentation: 'modal', title: t('entry.addTitle') }}
         />
-        <Stack.Screen name="entry/[id]" options={{ title: t('entry.editTitle') }} />
+        <Stack.Screen name="entry/[id]" options={{ title: t('entry.detailsTitle') }} />
+        <Stack.Screen name="entry/edit/[id]" options={{ title: t('entry.editTitle') }} />
         <Stack.Screen
           name="measurement/new"
           options={{ presentation: 'modal', title: t('measurement.addTitle') }}

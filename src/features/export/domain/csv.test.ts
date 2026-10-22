@@ -76,13 +76,18 @@ describe('parseBackupCsv', () => {
         `photo,${at},,1,`, // unknown type
         `measurement,${at},nose,4,`, // unknown site
         `measurement,${at},waist,900,`, // out of range (5–300 cm)
-        `weight,${at},,10,`, // out of range (20–400 kg)
+        `weight,${at},,0,`, // not a weight (must be more than 0)
         'weight,not-a-date,,80,', // bad date
       ].join('\n'),
     );
     expect(backup?.weights).toHaveLength(1);
     expect(backup?.measurements).toHaveLength(1);
     expect(backup?.skipped).toBe(5);
+  });
+
+  it("imports a baby's weight (any positive weight, not only adults)", () => {
+    const csv = `${BACKUP_HEADER}\nweight,${day(1).toISOString()},,3.25,`;
+    expect(parseBackupCsv(csv)?.weights).toEqual([expect.objectContaining({ weightKg: 3.25 })]);
   });
 
   it('accepts files saved by Excel (byte order mark, Windows line endings)', () => {

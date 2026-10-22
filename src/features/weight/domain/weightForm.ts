@@ -13,6 +13,11 @@ export const weightFormSchema = z.object({
   // refine runs at validation time; z.date().max(new Date()) would freeze "now" when the module loads
   measuredAt: z.date().refine((d) => d.getTime() <= Date.now() + 60_000, 'errors.futureDate'),
   note: z.string().max(280, 'errors.tooLong').optional(),
+  // see PhotoValue in ./photo: a saved photo, a just-picked one, or none
+  photo: z
+    .union([z.object({ stored: z.string() }), z.object({ picked: z.string() })])
+    .nullable()
+    .optional(),
 });
 export type WeightFormInput = z.input<typeof weightFormSchema>;
 export type WeightFormOutput = z.output<typeof weightFormSchema>;

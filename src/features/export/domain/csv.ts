@@ -61,7 +61,8 @@ const date = z.coerce.date().refine((d) => !Number.isNaN(d.getTime()));
 const note = z.string().transform((s) => s || null);
 const weightRow = z.object({
   measuredAt: date,
-  weightKg: z.coerce.number().min(20).max(400),
+  // Any positive weight (a newborn is about 3 kg); the maximum only catches a broken value in the file
+  weightKg: z.coerce.number().positive().max(400),
   note,
 });
 // "calf" (no side) is how backups made before left/right calves name it: imported as both, like the database migration

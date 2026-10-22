@@ -1,5 +1,6 @@
 import { pickCsvText } from '@/features/export/pickCsvText';
 import { shareCsv } from '@/features/export/shareCsv';
+import { deleteAllPhotos } from '@/features/weight/data/photos';
 import { measurementRepository } from '@/features/measurements/data/measurementRepository';
 import { weightRepository } from '@/features/weight/data/weightRepository';
 import { makeMeasurement, makeWeight } from '@/test/factories';
@@ -8,6 +9,8 @@ import { DataSection } from './DataSection';
 
 jest.mock('@/features/export/pickCsvText', () => ({ pickCsvText: jest.fn() }));
 jest.mock('@/features/export/shareCsv', () => ({ shareCsv: jest.fn() }));
+jest.mock('@/features/weight/data/photos', () => ({ deleteAllPhotos: jest.fn() }));
+jest.mock('@/shared/lib/confirm', () => ({ confirm: jest.fn(() => Promise.resolve(true)) }));
 jest.mock('@/features/weight/data/weightRepository', () => ({
   weightRepository: { listQuery: jest.fn(), addMany: jest.fn(), removeAll: jest.fn() },
 }));
@@ -62,5 +65,24 @@ describe('DataSection', () => {
     expect(await screen.findByText("This file isn't a BodyTrack export.")).toBeOnTheScreen();
     expect(weights.addMany).not.toHaveBeenCalled();
     expect(measurements.addMany).not.toHaveBeenCalled();
+  });
+
+  it('delete all also deletes the progress photos', async () => {
+    const user = userEvent.setup();
+    await renderWithProviders(<DataSection />);
+    await user.press(screen.getByRole('button', { name: 'Delete all data' }));
+    expect(weights.removeAll).toHaveBeenCalled();
+    expect(deleteAllPhotos).toHaveBeenCalled();
+  });
+
+  it('exports without the photos (they stay on the device)', async () => {
+    const user = userEvent.setup();
+    weights.listQuery.mockReturnValue({
+      all: () => [makeWeight({ photoUri: 'photos/1.jpg' })],
+    } as never);
+    measurements.listQuery.mockReturnValue({ all: () => [] } as never);
+    await renderWithProviders(<DataSection />);
+    await user.press(screen.getByRole('button', { name: 'Export CSV' }));
+    expect(jest.mocked(shareCsv).mock.lastCall![0]).not.toContain('photos/');
   });
 });
