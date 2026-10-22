@@ -3,12 +3,14 @@
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
-    "add": "Add"
+    "add": "Add",
+    "clear": "Clear"
   },
   "tabs": {
     "dashboard": "Dashboard",
     "history": "History",
     "measurements": "Measurements",
+    "food": "Food",
     "settings": "Settings"
   },
   "dashboard": {
@@ -116,5 +118,56 @@
   "error": {
     "title": "Something went wrong",
     "retry": "Try again"
+  },
+  "food": {
+    "title": "Food lookup",
+    "barcode": "Barcode",
+    "search": "Look up",
+    "notFound": "No product found for this barcode.",
+    "error": "Couldn't reach the food database. Check your connection.",
+    "retry": "Retry",
+    "per100g": "Per 100 g",
+    "kcal": "{{value}} kcal",
+    "unknownBrand": "Unknown brand",
+    "per100ml": "Per 100 ml",
+    "grams": "{{value}} g",
+    "nutriScore": "Nutri-Score {{grade}}",
+    "nutrients": {
+      "energy": "Energy",
+      "fat": "Fat",
+      "saturatedFat": "of which saturates",
+      "monounsaturatedFat": "of which mono-unsaturates",
+      "polyunsaturatedFat": "of which polyunsaturates",
+      "carbohydrate": "Carbohydrate",
+      "sugars": "of which sugars",
+      "fibre": "Fibre",
+      "protein": "Protein",
+      "salt": "Salt"
+    },
+    "levels": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "unknown": "Unknown"
+    },
+    "ofReference": "{{value}}% of the daily reference intake",
+    "whoAdvice": "WHO advice for adults: less than 5 g of salt a day, free sugars under 10% of daily energy, saturated fat 10% or less.",
+    "disclaimer": "Levels: UK front-of-pack criteria (per 100 g, or per portion when it is large). Claims: EU rules (Regulation 1924/2006). General information, not medical advice.",
+    "scan": "Scan a barcode",
+    "scanHint": "Point the camera at the barcode.",
+    "closeScanner": "Close the camera",
+    "cameraDenied": "Camera access is off for BodyTrack.",
+    "openSettings": "Open settings",
+    "claims": {
+      "lowEnergy": "Low energy",
+      "highMonounsaturatedFat": "High monounsaturated fat",
+      "highPolyunsaturatedFat": "High polyunsaturated fat",
+      "sourceOfFibre": "Source of fibre",
+      "highFibre": "High fibre",
+      "sourceOfProtein": "Source of protein",
+      "highProtein": "High protein"
+    },
+    "energy": "{{kj}} kJ / {{kcal}}",
+    "ofFibreIntake": "{{value}}% of the 25 g a day advised (EFSA)"
   }
 }

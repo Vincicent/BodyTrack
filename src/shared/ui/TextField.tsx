@@ -1,11 +1,20 @@
 import { useTheme } from '@/shared/theme/useTheme';
-import { TextInput, View, type TextInputProps } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
+import { Pressable, TextInput, View, type TextInputProps } from 'react-native';
 import { AppText } from './AppText';
 
-type TextFieldProps = TextInputProps & { label: string; error?: string; unit?: string };
+type TextFieldProps = TextInputProps & {
+  label: string;
+  error?: string;
+  unit?: string;
+  /** Shows an ✕ inside the field while it has text; called when it's pressed. */
+  onClear?: () => void;
+};
 
-export function TextField({ label, error, unit, style, ...rest }: TextFieldProps) {
+export function TextField({ label, error, unit, onClear, style, ...rest }: TextFieldProps) {
   const t = useTheme();
+  const { t: tr } = useTranslation();
   return (
     <View style={{ gap: t.spacing.xs }}>
       <AppText variant="caption">{label}</AppText>
@@ -34,6 +43,16 @@ export function TextField({ label, error, unit, style, ...rest }: TextFieldProps
           ]}
           {...rest}
         />
+        {onClear && rest.value ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={tr('common.clear')}
+            hitSlop={12}
+            onPress={onClear}
+          >
+            <Ionicons name="close-circle" size={22} color={t.colors.textMuted} />
+          </Pressable>
+        ) : null}
         {unit ? <AppText variant="caption">{unit}</AppText> : null}
       </View>
       {error ? (

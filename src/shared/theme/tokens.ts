@@ -12,6 +12,8 @@ export const palette = {
   gray950: '#0B0F19',
   green400: '#4ADE80',
   green700: '#15803D',
+  amber400: '#FBBF24',
+  amber700: '#B45309',
   red400: '#F87171',
   red600: '#DC2626',
   white: '#FFFFFF',
@@ -30,11 +32,12 @@ type ThemeColors = Record<
   | 'onPrimary'
   | 'border'
   | 'success'
+  | 'warning'
   | 'danger',
   string
 >;
 
-// Every text colour below has a contrast ratio ≥ 4.5:1 on `background` and `surface` (WCAG AA).
+// Every text colour below has a contrast ratio ≥ 4.5:1 on `background` and `surface` (WCAG AA): tokens.test.ts checks it.
 const light: ThemeColors = {
   background: palette.gray50,
   surface: palette.white,
@@ -44,6 +47,7 @@ const light: ThemeColors = {
   onPrimary: palette.white,
   border: palette.gray200,
   success: palette.green700,
+  warning: palette.amber700,
   danger: palette.red600,
 };
 const dark: ThemeColors = {
@@ -55,6 +59,7 @@ const dark: ThemeColors = {
   onPrimary: palette.gray950,
   border: palette.gray700,
   success: palette.green400,
+  warning: palette.amber400,
   danger: palette.red400,
 };
 export const themes = { light, dark };

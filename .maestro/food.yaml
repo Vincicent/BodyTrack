@@ -1,0 +1,24 @@
+# The Food tab, without the network (a real lookup would make CI depend on Open Food Facts being up): an invalid
+# barcode can't be looked up, a valid one can, and the ✕ clears the field.
+appId: com.vincicent.bodytrack
+---
+- launchApp:
+    clearState: true
+- tapOn: 'Food.*' # tab: iOS reads it as "Food, tab, 4 of 5"
+- assertVisible: 'Food lookup'
+- tapOn:
+    id: 'barcode-input'
+- inputText: '123'
+- assertVisible:
+    text: 'Look up'
+    enabled: false # 3 digits: not a barcode
+- inputText: '45678' # now 12345678: a valid EAN-8
+- assertVisible:
+    text: 'Look up'
+    enabled: true
+- tapOn: 'Clear' # the ✕ inside the field
+- assertNotVisible: '12345678'
+- assertNotVisible: 'Clear' # empty field: no ✕
+- assertVisible:
+    text: 'Look up'
+    enabled: false
