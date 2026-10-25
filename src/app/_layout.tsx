@@ -8,6 +8,7 @@ import { ThemePreferenceProvider } from '@/shared/theme/ThemePreference';
 import { useColorSchemeName } from '@/shared/theme/useTheme';
 import { ErrorScreen } from '@/shared/ui';
 import { AnimatedSplash } from '@/shared/ui/AnimatedSplash';
+import { ThemedStatusBar } from '@/shared/ui/ThemedStatusBar';
 import { persistor, store } from '@/store';
 import { useAppSelector } from '@/store/hooks';
 import {
@@ -45,6 +46,7 @@ function Navigation() {
   const isDark = useColorSchemeName() === 'dark';
   return (
     <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
+      <ThemedStatusBar />
       {/* minimal: only the back arrow (otherwise iOS shows the route group's name, "(tabs)") */}
       <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
